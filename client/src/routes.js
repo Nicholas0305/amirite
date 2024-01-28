@@ -7,7 +7,7 @@ const routes = [
       path: "/",
       element: <App />,
       children: [
-        { path: "/", element: <Audio /> },
+        { path: "/", element: <LoginPage /> },
         { path: "/MainPage", element: <MainPage /> },
       
       ],

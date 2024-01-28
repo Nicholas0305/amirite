@@ -1,7 +1,10 @@
 import React from 'react'
+import MainPageNav from './MainPageNav'
 function MainPage(){
     return(
-        <div>MainPage</div>
+        <div id='mainPage-container'>
+            <MainPageNav/>
+        </div>
     )
 }
 export default MainPage;
