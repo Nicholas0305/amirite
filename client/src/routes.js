@@ -7,8 +7,9 @@ const routes = [
       path: "/",
       element: <App />,
       children: [
-        { path: "/", element: <LoginPage /> },
+        { path: "/", element: <MainPage /> },
         { path: "/MainPage", element: <MainPage /> },
+        // {path: '/Chats',element:<Chats/>}
       
       ],
     },

@@ -44,3 +44,35 @@ textarea {
   cursor: pointer;
   font-size: 16px;
 }
+#navbar{
+  background-color: rgb(39, 39, 39);
+  align-items: center;
+  color: white;
+  
+  padding: 5px 10px;
+  border-bottom: 1px solid grey;
+  position: relative;
+  width: 100%;
+  display:flex;
+  justify-content: center;
+}
+#navbar button {
+  background-color: white;
+  color:black;
+  border: 1px solid grey;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  transition: background-color 0.3s, color 0.3s;
+  margin-right: 10px;
+  width:fit-content
+}
+#navbar h1 {
+  margin-right: 10px;
+}
+
+#navbar button:hover {
+  background-color: grey;
+  color: black;
+}
