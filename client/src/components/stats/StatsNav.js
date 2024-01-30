@@ -1,24 +1,16 @@
 import React from 'react'
-import { useNavigate } from "react-router-dom";
-
-function MainPageNav(){
-    
-        const navigate = useNavigate();
+import {useNavigate} from 'react-router-dom'
+function StatsNav(){
+    const navigate = useNavigate();
       
         const navigateToHome = () => {
           navigate('/')
         };
         const navigateToStats = () => {
-          navigate('/Stats')
-        };
-        
-       
+            navigate('/Stats')
+          };
     
-    
-    
-    
-    
-    return(
+        return(
        <nav className='navbar'>
         <h1 onClick={navigateToHome}>Amirite</h1>
         <button onClick={navigateToStats}>Statistics</button>
@@ -30,4 +22,4 @@ function MainPageNav(){
        </nav>
     )
 }
-export default MainPageNav;
+export default StatsNav;

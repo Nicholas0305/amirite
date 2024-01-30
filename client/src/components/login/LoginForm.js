@@ -2,23 +2,24 @@ import React from 'react';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 import Draggable from 'react-draggable';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate from react-router-dom
 
 function LoginForm() {
+    const navigate = useNavigate(); // Use useNavigate hook to get the navigate function
+
     const formSchema = yup.object({
         username: yup.string().required("Please enter username"),
         password: yup.string().required("Please enter password."),
-       
     });
 
     const formik = useFormik({
         initialValues: {
             username: '',
             password: '',
-            
         },
         validationSchema: formSchema,
-        onSubmit: (values) => {
-            fetch('', {
+        onSubmit: (values, { setSubmitting }) => { // Add setSubmitting parameter
+            fetch('http://127.0.0.1:5555/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -27,20 +28,31 @@ function LoginForm() {
             })
                 .then((res) => {
                     if (res.ok) {
-                        return res.json(); // This returns the promise for the next .then()
+                        return res.json();
                     }
                     throw new Error('Network response was not ok.');
                 })
-              
+                .then((data) => {
+                    console.log(data);
+                    if (data.success) { // Check if login was successful
+                        navigate('/MainPage'); // Navigate to the home page
+                    } else {
+                        alert(data.message); // Show error message
+                    }
+                })
                 .catch((error) => {
                     console.error("There was a problem with the fetch operation:", error);
+                })
+                .finally(() => {
+                    setSubmitting(false); // Reset submitting state after form submission
                 });
         }
     });
-   return (
+
+    return (
         <Draggable>
-            <div id="newform">
-                <form onSubmit={formik.handleSubmit}>
+            <div id="login_form">
+                <form onSubmit={(e) => { e.preventDefault(); formik.handleSubmit(e); }}> {/* Prevent default form submission */}
                     <div>
                         <label htmlFor="username">Username</label>
                         <input
@@ -48,30 +60,27 @@ function LoginForm() {
                             name="username"
                             type="text"
                             onChange={formik.handleChange}
-                            value={formik.values.email_title}
-                            placeholder="username"
+                            value={formik.values.username}
+                            placeholder="Username"
                         />
-                        {formik.errors.email_title && <div>{formik.errors.email_title}</div>}
+                        {formik.errors.username && <div>{formik.errors.username}</div>}
                     </div>
 
                     <div>
-                        <label htmlFor="Password">password</label>
+                        <label htmlFor="password">Password</label>
                         <input
                             id="password"
                             name="password"
-                            type="text"
+                            type="password"
                             onChange={formik.handleChange}
-                            value={formik.values.subject}
-                            placeholder="password"
+                            value={formik.values.password}
+                            placeholder="Password"
                         />
-                        {formik.errors.subject && <div>{formik.errors.subject}</div>}
+                        {formik.errors.password && <div>{formik.errors.password}</div>}
                     </div>
 
-             
                     <button type="submit">Submit</button>
-                    
                 </form>
-
             </div>
         </Draggable>
     );
