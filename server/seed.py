@@ -3,8 +3,17 @@ from models import db, User, Chat_Rooms, Room_Participants, Messages
 from datetime import datetime
 
 if __name__ == '__main__':
-   with app.app_context():
-        # Sample data for Users
+    with app.app_context():
+        print("deleting tables...")
+
+        User.query.delete()
+        Chat_Rooms.query.delete()
+        Room_Participants.query.delete()
+        Messages.query.delete()
+
+        db.session.commit()
+
+        print("creating tables...")
         users = [
             User(
                 username="user1",

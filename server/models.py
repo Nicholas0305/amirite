@@ -26,6 +26,7 @@ class Messages(db.Model, SerializerMixin):
     room = db.relationship('Chat_Rooms', back_populates='messages')
 
     serialize_rules = ('-messages',)
+
 class Chat_Rooms(db.Model, SerializerMixin):
     __tablename__ = 'chat_rooms'
     room_id = db.Column(db.Integer, primary_key=True)
