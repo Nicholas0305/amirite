@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import MainPageNav from './MainPageNav';
-
+import SideBar from './SideBar'
 function MainPage() {
     const [rooms, setRooms] = useState([]);
 
@@ -25,9 +25,7 @@ function MainPage() {
     return (
         <div id='mainPage-container'>
             <MainPageNav />
-            {rooms.map((room)=>{
-                console.log(room.room_name) 
-            })}
+            <SideBar/>
         </div>
     );
 }
