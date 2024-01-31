@@ -38,6 +38,7 @@ if __name__ == '__main__':
             )
         ]
         db.session.add_all(users)
+        db.session.commit()
 
         # Sample data for Chat Rooms
         chat_rooms = [
@@ -51,6 +52,7 @@ if __name__ == '__main__':
             )
         ]
         db.session.add_all(chat_rooms)
+        db.session.commit()
 
         # Sample data for Room Participants
         room_participants = [
@@ -68,6 +70,7 @@ if __name__ == '__main__':
             )
         ]
         db.session.add_all(room_participants)
+        db.session.commit()
 
         # Sample data for Messages
         messages = [

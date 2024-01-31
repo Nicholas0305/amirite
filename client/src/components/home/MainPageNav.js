@@ -6,7 +6,7 @@ function MainPageNav(){
         const navigate = useNavigate();
       
         const navigateToHome = () => {
-          navigate('/')
+          navigate('/MainPage')
         };
         const navigateToStats = () => {
           navigate('/Stats')
