@@ -2,7 +2,7 @@ from config import app
 from models import db, User, Chat_Rooms, Room_Participants, Messages
 from datetime import datetime
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     with app.app_context():
         print("Deleting tables...")
 
@@ -22,22 +22,22 @@ if __name__ == '__main__':
                 password="password1",
                 likes=10,
                 dislikes=5,
-                created_at=datetime.utcnow()
+                created_at=datetime.utcnow(),
             ),
             User(
                 username="user2",
                 password="password2",
                 likes=15,
                 dislikes=3,
-                created_at=datetime.utcnow()
+                created_at=datetime.utcnow(),
             ),
             User(
                 username="user3",
                 password="password3",
                 likes=20,
                 dislikes=8,
-                created_at=datetime.utcnow()
-            )
+                created_at=datetime.utcnow(),
+            ),
             # Add more users if needed
         ]
         db.session.add_all(users)
@@ -45,18 +45,9 @@ if __name__ == '__main__':
 
         # Sample data for Chat Rooms
         chat_rooms = [
-            Chat_Rooms(
-                room_name="Room 1",
-                created_at=datetime.utcnow()
-            ),
-            Chat_Rooms(
-                room_name="Room 2",
-                created_at=datetime.utcnow()
-            ),
-            Chat_Rooms(
-                room_name="Room 3",
-                created_at=datetime.utcnow()
-            )
+            Chat_Rooms(room_name="Room 1", created_at=datetime.utcnow()),
+            Chat_Rooms(room_name="Room 2", created_at=datetime.utcnow()),
+            Chat_Rooms(room_name="Room 3", created_at=datetime.utcnow()),
             # Add more chat rooms if needed
         ]
         db.session.add_all(chat_rooms)
@@ -64,22 +55,10 @@ if __name__ == '__main__':
 
         # Sample data for Room Participants
         room_participants = [
-            Room_Participants(
-                room_id=1,
-                user_id=1
-            ),
-            Room_Participants(
-                room_id=1,
-                user_id=2
-            ),
-            Room_Participants(
-                room_id=2,
-                user_id=2
-            ),
-            Room_Participants(
-                room_id=3,
-                user_id=3
-            )
+            Room_Participants(room_id=1, user_id=1),
+            Room_Participants(room_id=1, user_id=2),
+            Room_Participants(room_id=2, user_id=2),
+            Room_Participants(room_id=3, user_id=3),
             # Add more room participants if needed
         ]
         db.session.add_all(room_participants)
@@ -90,23 +69,21 @@ if __name__ == '__main__':
             Messages(
                 message="Hello, this is a test message!",
                 room_id=1,
-                created_at=datetime.utcnow()
+                created_at=datetime.utcnow(),
             ),
             Messages(
-                message="Another test message.",
-                room_id=1,
-                created_at=datetime.utcnow()
+                message="Another test message.", room_id=1, created_at=datetime.utcnow()
             ),
             Messages(
                 message="Yet another test message.",
                 room_id=2,
-                created_at=datetime.utcnow()
+                created_at=datetime.utcnow(),
             ),
             Messages(
                 message="Testing a message in Room 3.",
                 room_id=3,
-                created_at=datetime.utcnow()
-            )
+                created_at=datetime.utcnow(),
+            ),
             # Add more messages if needed
         ]
         db.session.add_all(messages)
