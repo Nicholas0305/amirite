@@ -1,31 +1,41 @@
 import React, { useEffect, useState } from 'react';
 import MainPageNav from './MainPageNav';
-import SideBar from './SideBar'
+import ChatRoomList from './ChatRoomList'
+import SearchBar from './SearchBar'
+import Chat from './Chat'
 function MainPage() {
+    const url = 'http://127.0.0.1:5555'
     const [rooms, setRooms] = useState([]);
-
+    const[selectedRoom,setSelectedRoom] = useState()
+    const [search, setSearch] = useState('')
+    const [showComponent, setShowComponent] = useState(false);
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch('http://127.0.0.1:5555/chat_rooms');
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                const chatRooms = await response.json();
-                setRooms(chatRooms);
-                console.log(chatRooms);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
+        fetch(url + "/chat_rooms")
+          .then((res) => res.json())
+          .then((chat_rooms) => {
+            setRooms(chat_rooms);
+            console.log("Chat Rooms:", chat_rooms)
+          })
+          .catch((error) => console.error("Error fetching data:", error));
+      }, []);
+  const toggleComponent = (room) => {
+    // Update the selectedEmail state, always show EmailBody
+    setSelectedRoom(room);
+    setShowComponent(true)
+    console.log(room)
+  }
 
-        fetchData();
-    }, []); // Empty dependency array to run effect only once after initial render
+  const filtered = rooms.filter(room => room.room_name.toUpperCase().includes(search.toUpperCase()))
 
+  const updateSearch = (e) => {
+    setSearch(e.target.value)
+  }
     return (
         <div id='mainPage-container'>
             <MainPageNav />
-            <SideBar/>
+            <div id='search-container'><SearchBar search={search} updateSearch={updateSearch}/></div>
+            <ChatRoomList  toggleComponent ={toggleComponent} rooms={filtered} />
+            {showComponent && <Chat room={selectedRoom}/>}
         </div>
     );
 }

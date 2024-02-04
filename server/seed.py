@@ -4,7 +4,7 @@ from datetime import datetime
 
 if __name__ == '__main__':
     with app.app_context():
-        print("deleting tables...")
+        print("Deleting tables...")
 
         User.query.delete()
         Chat_Rooms.query.delete()
@@ -13,7 +13,9 @@ if __name__ == '__main__':
 
         db.session.commit()
 
-        print("creating tables...")
+        print("Creating tables...")
+
+        # Sample data for Users
         users = [
             User(
                 username="user1",
@@ -36,6 +38,7 @@ if __name__ == '__main__':
                 dislikes=8,
                 created_at=datetime.utcnow()
             )
+            # Add more users if needed
         ]
         db.session.add_all(users)
         db.session.commit()
@@ -49,7 +52,12 @@ if __name__ == '__main__':
             Chat_Rooms(
                 room_name="Room 2",
                 created_at=datetime.utcnow()
+            ),
+            Chat_Rooms(
+                room_name="Room 3",
+                created_at=datetime.utcnow()
             )
+            # Add more chat rooms if needed
         ]
         db.session.add_all(chat_rooms)
         db.session.commit()
@@ -57,17 +65,22 @@ if __name__ == '__main__':
         # Sample data for Room Participants
         room_participants = [
             Room_Participants(
-                room_id=1,  # Assuming you have IDs for chat rooms
-                user_id=1  # Assuming you have IDs for users
+                room_id=1,
+                user_id=1
             ),
             Room_Participants(
-                room_id=1,  # Assuming you have IDs for chat rooms
-                user_id=2  # Assuming you have IDs for users
+                room_id=1,
+                user_id=2
             ),
             Room_Participants(
-                room_id=2,  # Assuming you have IDs for chat rooms
-                user_id=2  # Assuming you have IDs for users
+                room_id=2,
+                user_id=2
+            ),
+            Room_Participants(
+                room_id=3,
+                user_id=3
             )
+            # Add more room participants if needed
         ]
         db.session.add_all(room_participants)
         db.session.commit()
@@ -76,20 +89,28 @@ if __name__ == '__main__':
         messages = [
             Messages(
                 message="Hello, this is a test message!",
-                room_id=1,  # Assuming you have IDs for chat rooms
+                room_id=1,
                 created_at=datetime.utcnow()
             ),
             Messages(
                 message="Another test message.",
-                room_id=1,  # Assuming you have IDs for chat rooms
+                room_id=1,
                 created_at=datetime.utcnow()
             ),
             Messages(
                 message="Yet another test message.",
-                room_id=2,  # Assuming you have IDs for chat rooms
+                room_id=2,
+                created_at=datetime.utcnow()
+            ),
+            Messages(
+                message="Testing a message in Room 3.",
+                room_id=3,
                 created_at=datetime.utcnow()
             )
+            # Add more messages if needed
         ]
         db.session.add_all(messages)
 
         db.session.commit()
+
+        print("Seed data added successfully!")

@@ -56,18 +56,6 @@ textarea {
   display:flex;
   justify-content: center;
 }
-/* .navbar button {
-  background-color: white;
-  color:black;
-  border: 1px solid grey;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  font-size: 16px;
-  transition: background-color 0.3s, color 0.3s;
-  margin-right: 10px;
-  width:fit-content
-} */
 .navbar h1 {
   margin-right: 10px;
   cursor:pointer;
@@ -116,4 +104,41 @@ textarea {
   margin-left: 0;
   padding: 0;
   margin-top: 0;
+}
+#chatroomlist {
+  display: flex;
+  justify-content: center;
+  margin-left: 0;
+  list-style: none;
+  padding: 0;
+  flex-wrap: wrap;
+}
+.card{
+  background-color: whitesmoke;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  width: fit-content;
+  transition: box-shadow 0.3s;
+  margin-bottom: 20px;
+  margin-left: 5px;
+  margin-right: 5px;
+  padding: 20px;
+}
+.card:hover{
+  cursor: pointer;
+  
+}
+
+#search-container{
+display: flex;
+justify-content: center;
+margin-top: 10px;
+}
+#searchbar{
+  padding: 10px 20px;
+  border: 2px solid #ccc;
+  border-radius: 20px;
+  outline: none;
+  width: 200px;
+  transition: all 0.3s ease;
 }

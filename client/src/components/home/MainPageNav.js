@@ -12,22 +12,11 @@ function MainPageNav(){
           navigate('/Stats')
         };
         
-       
-    
-    
-    
-    
-    
-    return(
+      return(
        <nav className='navbar'>
         <h1 onClick={navigateToHome}>Amirite</h1>
         <button onClick={navigateToStats}>Statistics</button>
-        <button></button>
-        <button></button>
-       
-       
-       
-       </nav>
+      </nav>
     )
 }
 export default MainPageNav;
