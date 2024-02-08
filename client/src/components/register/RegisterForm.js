@@ -4,7 +4,7 @@ import * as yup from "yup";
 import Draggable from "react-draggable";
 import { useNavigate } from "react-router-dom"; // Import useNavigate from react-router-dom
 
-function LoginForm() {
+function RegisterForm() {
   const navigate = useNavigate(); // Use useNavigate hook to get the navigate function
 
   const formSchema = yup.object({
@@ -20,7 +20,7 @@ function LoginForm() {
     validationSchema: formSchema,
     onSubmit: (values, { setSubmitting }) => {
       // Add setSubmitting parameter
-      fetch("http://127.0.0.1:5555/login", {
+      fetch("http://127.0.0.1:5555/users", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -37,7 +37,7 @@ function LoginForm() {
           console.log(data);
           if (data.success) {
             // Check if login was successful
-            navigate("/MainPage"); // Navigate to the home page
+            navigate("/"); // Navigate to the home page
           } else {
             alert(data.message); // Show error message
           }
@@ -61,7 +61,7 @@ function LoginForm() {
           }}
         >
           {" "}
-          <h2>Login</h2>
+          <h2>Register</h2>
           <div>
             <label htmlFor="username">Username</label>
             <input
@@ -93,4 +93,4 @@ function LoginForm() {
   );
 }
 
-export default LoginForm;
+export default RegisterForm;

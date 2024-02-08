@@ -1,6 +1,7 @@
 from config import app
 from flask import jsonify, request, make_response
 from models import db, User, Chat_Rooms, Messages
+from datetime import datetime  # Import datetime module
 
 
 @app.route("/login", methods=["POST"])
@@ -16,11 +17,26 @@ def login():
         return jsonify({"success": False, "message": "Invalid credentials"})
 
 
-@app.route("/chat_rooms", methods=["GET"])
+@app.route("/chat_rooms", methods=["GET", "POST"])
 def chat_rooms():
-    chat_rooms = Chat_Rooms.query.all()
-    chat_rooms_dict = [chat_room.to_dict() for chat_room in chat_rooms]
-    return jsonify(chat_rooms_dict)
+    if request.method == "GET":
+        chat_rooms = Chat_Rooms.query.all()
+        chat_rooms_dict = [chat_room.to_dict() for chat_room in chat_rooms]
+        return jsonify(chat_rooms_dict)
+    elif request.method == "POST":
+        form_data = request.get_json()
+
+        new_chat_room = Chat_Rooms(
+            room_name=form_data["room_name"],
+            created_at=form_data["created_at"],
+            # Add other fields as needed
+        )
+
+        db.session.add(new_chat_room)
+        db.session.commit()
+
+        response = make_response(new_chat_room.to_dict(), 201)
+        return response
 
 
 @app.route("/chat_rooms/<int:room_id>", methods=["GET"])
@@ -32,11 +48,29 @@ def get_chat_room(room_id):
         return jsonify({"error": "Chat room not found"}), 404
 
 
-@app.route("/messages", methods=["GET"])
+@app.route("/messages", methods=["GET", "POST"])
 def messages():
-    messages = Messages.query.all()
-    messages_dict = [message.to_dict() for message in messages]
-    return jsonify(messages_dict)
+    if request.method == "GET":
+        messages = Messages.query.all()
+        messages_dict = [message.to_dict() for message in messages]
+        return jsonify(messages_dict)
+    elif request.method == "POST":
+        form_data = request.get_json()
+
+        # Use the current timestamp for the created_at field
+        current_time = datetime.utcnow()
+
+        new_message = Messages(
+            message=form_data["message"],
+            room_id=form_data["room_id"],
+            created_at=current_time,  # Use current timestamp
+        )
+
+        db.session.add(new_message)
+        db.session.commit()
+
+        response = make_response(new_message.to_dict(), 201)
+        return response
 
 
 @app.route("/messages/<int:room_id>", methods=["GET"])
@@ -49,11 +83,26 @@ def get_messages_by_room(room_id):
         return jsonify({"error": "No messages found for this room"}), 404
 
 
-@app.route("/users", methods=["GET"])
+@app.route("/users", methods=["GET", "POST"])
 def users_all():
-    users = User.query.all()
-    users_dict = [user.to_dict() for user in users]
-    return jsonify(users_dict)
+    if request.method == "GET":
+        users = User.query.all()
+        users_dict = [user.to_dict() for user in users]
+        return jsonify(users_dict)
+    elif request.method == "POST":
+        form_data = request.get_json()
+
+        new_user = User(
+            username=form_data["username"],
+            password=form_data["password"],
+            # Add other fields as needed
+        )
+
+        db.session.add(new_user)
+        db.session.commit()
+
+        response = make_response(new_user.to_dict(), 201)
+        return response
 
 
 if __name__ == "__main__":

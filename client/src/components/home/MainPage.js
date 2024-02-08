@@ -37,6 +37,7 @@ function MainPage() {
       <MainPageNav />
       <div id="search-container">
         <SearchBar search={search} updateSearch={updateSearch} />
+        <button id="add-chat_room-button">+</button>
       </div>
       <ChatRoomList toggleComponent={toggleComponent} rooms={filtered} />
       {showComponent && <Chat room={selectedRoom} />}

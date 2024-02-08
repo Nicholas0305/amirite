@@ -110,6 +110,8 @@ textarea {
   list-style: none;
   padding: 0;
   flex-wrap: wrap;
+  max-height: 300px; /* Adjust the height as needed */
+  overflow-y: auto; /* Enable vertical scrolling */
 }
 .card {
   background-color: whitesmoke;
@@ -142,14 +144,17 @@ textarea {
 #chat-container {
   display: flex;
   justify-content: center;
+  overflow-y: hidden;
 }
 #chat-list {
   list-style: none;
   border-radius: 10px;
   border: 2px solid #000000; /* Black border */
-  overflow: hidden;
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 500px; /* Set maximum height to enable scrolling */
   width: 70vw;
 }
+
 #chat-list li {
   background-color: #dcf8c6;
   padding: 10px 15px;
@@ -171,9 +176,29 @@ textarea {
   border-radius: 5px;
   font-size: 16px;
   margin-bottom: 10px;
+  flex: 1; /* Take remaining space */
 }
 
 #chat-input:focus {
   outline: none;
   border-color: #007bff; /* Blue border when focused */
+}
+#submit {
+  background-color: #4caf50; /* Green background */
+  color: white; /* White text */
+  padding: 10px 20px; /* Padding */
+  font-size: 16px; /* Font size */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Cursor on hover */
+  transition: background-color 0.3s; /* Smooth transition */
+  width: fit-content;
+  margin-left: 10px;
+}
+#submit:hover {
+  background-color: #45a049; /* Darker green on hover */
+}
+#form-container {
+  display: flex;
+  display: inline;
 }

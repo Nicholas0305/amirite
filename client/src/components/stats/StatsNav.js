@@ -14,8 +14,6 @@ function StatsNav() {
     <nav className="navbar">
       <h1 onClick={navigateToHome}>Amirite</h1>
       <button onClick={navigateToStats}>Statistics</button>
-      <button></button>
-      <button></button>
     </nav>
   );
 }
