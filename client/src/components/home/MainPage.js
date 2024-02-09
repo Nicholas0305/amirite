@@ -3,12 +3,15 @@ import MainPageNav from "./MainPageNav";
 import ChatRoomList from "./ChatRoomList";
 import SearchBar from "./SearchBar";
 import Chat from "./Chat";
+import NewChatRoomForm from "./NewChatRoomForm";
+
 function MainPage() {
   const url = "http://127.0.0.1:5555";
   const [rooms, setRooms] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState();
   const [search, setSearch] = useState("");
   const [showComponent, setShowComponent] = useState(false);
+  const [chatForm, showChatForm] = useState(false);
   useEffect(() => {
     fetch(url + "/chat_rooms")
       .then((res) => res.json())
@@ -32,13 +35,20 @@ function MainPage() {
   const updateSearch = (e) => {
     setSearch(e.target.value);
   };
+
+  function handleFormClick() {
+    showChatForm((prev) => !prev);
+  }
   return (
     <div id="mainPage-container">
       <MainPageNav />
       <div id="search-container">
         <SearchBar search={search} updateSearch={updateSearch} />
-        <button id="add-chat_room-button">+</button>
+        <button onClick={handleFormClick} id="toggleFormButton">
+          +
+        </button>
       </div>
+      {chatForm && <NewChatRoomForm />}
       <ChatRoomList toggleComponent={toggleComponent} rooms={filtered} />
       {showComponent && <Chat room={selectedRoom} />}
     </div>

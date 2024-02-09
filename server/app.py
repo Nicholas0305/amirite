@@ -25,10 +25,11 @@ def chat_rooms():
         return jsonify(chat_rooms_dict)
     elif request.method == "POST":
         form_data = request.get_json()
-
+        current_time = datetime.utcnow()
         new_chat_room = Chat_Rooms(
             room_name=form_data["room_name"],
-            created_at=form_data["created_at"],
+            description=form_data["description"],
+            created_at=current_time,
             # Add other fields as needed
         )
 
@@ -63,7 +64,7 @@ def messages():
         new_message = Messages(
             message=form_data["message"],
             room_id=form_data["room_id"],
-            created_at=current_time,  # Use current timestamp
+            created_at=current_time,
         )
 
         db.session.add(new_message)

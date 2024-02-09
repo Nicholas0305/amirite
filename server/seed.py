@@ -45,9 +45,21 @@ if __name__ == "__main__":
 
         # Sample data for Chat Rooms
         chat_rooms = [
-            Chat_Rooms(room_name="Room 1", created_at=datetime.utcnow()),
-            Chat_Rooms(room_name="Room 2", created_at=datetime.utcnow()),
-            Chat_Rooms(room_name="Room 3", created_at=datetime.utcnow()),
+            Chat_Rooms(
+                room_name="Dogs vs Cats",
+                created_at=datetime.utcnow(),
+                description="This room is all about Dogs vs cats, no memes allowed.",
+            ),
+            Chat_Rooms(
+                room_name="Pizza is on top",
+                created_at=datetime.utcnow(),
+                description="I believe that pizza is the best food, jump in the room if you disaggree.",
+            ),
+            Chat_Rooms(
+                room_name="Ice Cream is better than cake",
+                created_at=datetime.utcnow(),
+                description="I love ice cream",
+            ),
             # Add more chat rooms if needed
         ]
         db.session.add_all(chat_rooms)
