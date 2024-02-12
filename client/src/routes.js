@@ -4,6 +4,7 @@ import MainPage from "./components/home/MainPage";
 import Audio from "./components/Audio";
 import Stats from "./components/stats/StatsPage";
 import RegisterPage from "./components/register/RegisterForm";
+import LeaderboardsPage from "./components/leaderboards/LeaderboardsPage";
 
 const routes = [
   {
@@ -14,6 +15,7 @@ const routes = [
       { path: "/Register", element: <RegisterPage /> },
       { path: "/MainPage", element: <MainPage /> },
       { path: "/Stats", element: <Stats /> },
+      { path: "/Leaderboards", element: <LeaderboardsPage /> },
     ],
   },
 ];

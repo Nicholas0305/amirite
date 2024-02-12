@@ -293,3 +293,50 @@ textarea {
     opacity: 0; /* Fade out */
   }
 }
+#username {
+  font-size: 14px; /* Adjust the font size as needed */
+  font-weight: bold; /* Use bold font for usernames to make them stand out */
+  color: #555; /* Choose a color that contrasts well with the background */
+  margin-bottom: 4px; /* Add a small margin bottom for separation */
+}
+.edit-button {
+  background-color: #007bff; /* Set background color */
+  color: #fff; /* Set text color */
+  border: none; /* Remove border */
+  border-radius: 4px; /* Add border radius for rounded corners */
+  padding: 8px 16px; /* Add padding for better clickability */
+  font-size: 14px; /* Set font size */
+  font-weight: bold; /* Set font weight */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transition: background-color 0.3s ease; /* Add transition effect */
+}
+
+.edit-button:hover {
+  background-color: #0056b3; /* Change background color on hover */
+}
+.stats-card {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.stats-card p {
+  margin: 0;
+  padding: 5px 0;
+}
+
+.stats-card #username {
+  font-size: 18px;
+  font-weight: bold;
+  color: #333;
+}
+
+.stats-card #likes {
+  color: #4caf50; /* green */
+}
+
+.stats-card #dislikes {
+  color: #f44336; /* red */
+}

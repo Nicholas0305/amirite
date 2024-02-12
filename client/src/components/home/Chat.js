@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
 import ChatCard from "./ChatCard";
 import MessageInput from "./MessageInput";
-
+import EditMessageButton from "./EditMessageButton";
 function Chat({ room, user }) {
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
   const url = "http://127.0.0.1:5555";
+  const [edit, setEdit] = useState(false);
 
   useEffect(() => {
     fetch(`${url}/messages/${room.room_id}`)
@@ -28,6 +29,14 @@ function Chat({ room, user }) {
     return user ? user.username : "Unknown User";
   };
 
+  const isCurrentUserMessage = (messageUserId) => {
+    return messageUserId === user.user_id;
+  };
+  const handleEditClick = () => {
+    setEdit((prev) => !prev);
+    console.log("clicked");
+  };
+
   return (
     <div id="chat-container">
       <ul id="chat-list">
@@ -35,13 +44,22 @@ function Chat({ room, user }) {
           <h1>Chat Room: {room.room_name}</h1>
         </div>
         {messages.length > 0 &&
-          messages &&
           messages.map((message) => (
             <div key={message.message_id}>
-              <p>{getMessageUserName(message.user_id)}</p>
-              <ChatCard key={message.message_id} message={message} />
+              <p id="username">{getMessageUserName(message.user_id)}</p>
+              <ChatCard
+                key={message.message_id}
+                message={message}
+                user={user}
+                edit={edit}
+                id={message.message_id}
+              />
+              {isCurrentUserMessage(message.user_id) && (
+                <button onClick={handleEditClick}>Edit</button>
+              )}
             </div>
           ))}
+        {edit && <input></input>}
         <MessageInput
           url={url}
           room={room}

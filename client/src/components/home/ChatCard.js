@@ -1,5 +1,5 @@
 import React from "react";
-function ChatCard({ message, users }) {
+function ChatCard({ message, edit, id }) {
   return (
     <li>
       <p>{message.message}</p>

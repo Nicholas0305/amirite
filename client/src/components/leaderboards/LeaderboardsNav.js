@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-function MainPageNav({ user }) {
+function LeaderboardsNav({ user }) {
   const navigate = useNavigate();
 
   const navigateToHome = () => {
@@ -29,4 +29,4 @@ function MainPageNav({ user }) {
     </nav>
   );
 }
-export default MainPageNav;
+export default LeaderboardsNav;

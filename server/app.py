@@ -93,10 +93,13 @@ def users_all():
         return jsonify(users_dict)
     elif request.method == "POST":
         form_data = request.get_json()
-
+        current_time = datetime.utcnow()
         new_user = User(
             username=form_data["username"],
             password=form_data["password"],
+            likes=0,
+            dislikes=0,
+            created_at=current_time,
             # Add other fields as needed
         )
 

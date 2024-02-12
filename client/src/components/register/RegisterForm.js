@@ -34,12 +34,10 @@ function RegisterForm() {
           throw new Error("Network response was not ok.");
         })
         .then((data) => {
-          console.log(data);
-          if (data.success) {
-            // Check if login was successful
-            navigate("/"); // Navigate to the home page
+          if (data) {
+            navigate("/");
           } else {
-            alert(data.message); // Show error message
+            alert(data.message);
           }
         })
         .catch((error) => {

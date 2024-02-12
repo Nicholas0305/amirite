@@ -71,7 +71,7 @@ function MainPage() {
         </div>
       )}
       <ChatRoomList toggleComponent={toggleComponent} rooms={filtered} />
-      {showComponent && <Chat room={selectedRoom} user={user} />}
+      {showComponent && <Chat room={selectedRoom} user={user} url={url} />}
     </div>
   );
 }
