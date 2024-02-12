@@ -34,7 +34,7 @@ function LoginForm() {
           throw new Error("Network response was not ok.");
         })
         .then((data) => {
-          if (data) {
+          if (data.success) {
             // Check if login was successful
             navigate("/MainPage", { state: { user: data } });
             console.log(data);

@@ -1,7 +1,7 @@
 from config import app
 from flask import jsonify, request, make_response
 from models import db, User, Chat_Rooms, Messages
-from datetime import datetime  # Import datetime module
+from datetime import datetime
 
 
 @app.route("/login", methods=["POST"])
@@ -12,7 +12,7 @@ def login():
 
     user = User.query.filter_by(username=username).first()
     if user and user.password == password:
-        return jsonify(user.to_dict()), 201
+        return jsonify({"success": True, **user.to_dict()}), 201
     else:
         return jsonify({"success": False, "message": "Invalid credentials"})
 

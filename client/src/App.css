@@ -340,3 +340,42 @@ textarea {
 .stats-card #dislikes {
   color: #f44336; /* red */
 }
+#leaderboards-list {
+  list-style: none;
+  margin-left: 0%;
+  padding-left: 0;
+}
+#Leaderboards-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  margin-bottom: 10px;
+  border-radius: 8px;
+  background-color: #f0f0f0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease;
+  margin-left: 0px;
+}
+
+#Leaderboards-card:hover {
+  background-color: #e0e0e0;
+}
+
+#Leaderboards-card span {
+  font-size: 16px;
+}
+
+#Leaderboards-card span:first-child {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+#Leaderboards-card span:last-child {
+  font-weight: bold;
+  color: #007bff;
+}
+#leaderboards-title {
+  display: flex;
+  justify-content: center;
+}

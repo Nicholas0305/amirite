@@ -35,11 +35,13 @@ function LeaderboardsList({ url }) {
   };
 
   return (
-    <div>
-      <h2>Leaderboards</h2>
-      <ul>
+    <div id="leaderboards-container">
+      <div id="leaderboards-title">
+        <h2>Leaderboards</h2>
+      </div>
+      <ul id="leaderboards-list">
         {users.map((user, index) => (
-          <li key={user.user_id}>
+          <li key={user.user_id} id="Leaderboards-card">
             <span>
               {index + 1}. {user.username}
             </span>
