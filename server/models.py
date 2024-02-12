@@ -25,6 +25,7 @@ class Messages(db.Model, SerializerMixin):
     message_id = db.Column(db.Integer, primary_key=True)
     message = db.Column(db.String)
     room_id = db.Column(db.Integer, db.ForeignKey("chat_rooms.room_id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     created_at = db.Column(db.DateTime)
 
     room = db.relationship("Chat_Rooms", back_populates="messages")

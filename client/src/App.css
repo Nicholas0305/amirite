@@ -1,3 +1,6 @@
+#mainPage-container {
+  overflow-x: hidden;
+}
 #Audio-container {
   display: flex;
   justify-content: center;
@@ -46,42 +49,48 @@ textarea {
 }
 .navbar {
   background-color: rgb(39, 39, 39);
-  align-items: center;
   color: white;
-
   padding: 5px 10px;
   border-bottom: 1px solid grey;
   position: relative;
-  width: 100%;
+  width: 99vw;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
 }
+
 .navbar h1 {
-  margin-right: 10px;
+  margin: 0; /* Remove default margin */
   cursor: pointer;
 }
+
 .navbar h1:hover {
   color: lightblue;
 }
-
-.navbar button:hover {
-  background-color: grey;
-  color: black;
-}
-.navbar button {
-  display: inline-block; /* Make the button inline with other navbar elements */
-  padding: 10px 20px; /* Add padding to the button */
-  background-color: #007bff; /* Set the background color of the button */
-  color: #fff; /* Set the text color of the button */
-  border: none; /* Remove border */
-  border-radius: 5px; /* Add border radius to make the button rounded */
-  cursor: pointer; /* Change cursor to pointer on hover */
-  transition: background-color 0.3s ease; /* Add transition effect for smoother hover */
+.navbar p {
+  position: relative;
+  display: inline-block;
+  margin-left: 10px;
+  cursor: pointer;
 }
 
-/* Button hover effect */
-.navbar-btn:hover {
-  background-color: #0056b3; /* Change background color on hover */
+.navbar p::after {
+  content: "";
+  position: absolute;
+  bottom: -2px; /* Adjust as needed */
+  left: 0;
+  width: 100%;
+  height: 2px; /* Adjust as needed */
+  background-color: transparent;
+  transition: background-color 0.3s ease; /* Smooth transition effect */
+}
+
+.navbar p:hover::after {
+  background-color: dodgerblue; /* Change the color to your desired underline color */
+}
+
+#userNav {
+  margin-left: auto; /* Push userNav to the right */
 }
 
 #sidebar {
@@ -158,7 +167,7 @@ textarea {
 
 #chat-list li {
   background-color: #dcf8c6;
-  padding: 10px 15px;
+  padding: 5px 10px;
   border-radius: 10px;
   margin: 5px 0;
   max-width: 70%;
@@ -261,4 +270,26 @@ textarea {
   display: flex;
 
   justify-content: center;
+}
+#welcomeMessage-container {
+  display: flex;
+  justify-content: center;
+}
+.welcomeMessage {
+  font-size: 18px;
+  color: #333;
+  font-weight: bold;
+  animation: fadeInOut 5s; /* Apply the fadeInOut animation for 5 seconds */
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: 0; /* Start with fully transparent */
+  }
+  50% {
+    opacity: 1; /* Fade in */
+  }
+  100% {
+    opacity: 0; /* Fade out */
+  }
 }

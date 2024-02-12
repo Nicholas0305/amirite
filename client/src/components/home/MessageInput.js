@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-function MessageInput({ room, setMessages }) {
+function MessageInput({ room, setMessages, user }) {
   const [message, setMessage] = useState("");
   const url = "http://127.0.0.1:5555";
 
@@ -15,6 +15,7 @@ function MessageInput({ room, setMessages }) {
       body: JSON.stringify({
         message: message,
         room_id: room.room_id,
+        user_id: user.user_id,
       }),
     })
       .then((response) => {

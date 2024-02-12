@@ -47,18 +47,17 @@ function NewChatRoomForm() {
             formik.handleSubmit(e);
           }}
         >
-          {" "}
           <h2>New Chat Room</h2>
           <div>
             <input
               id="chatRoomName"
-              name="chatRoomName"
+              name="room_name"
               type="text"
               onChange={formik.handleChange}
-              value={formik.values.username}
+              value={formik.values.room_name}
               placeholder="Chat Room Name"
             />
-            {formik.errors.username && <div>{formik.errors.username}</div>}
+            {formik.errors.room_name && <div>{formik.errors.room_name}</div>}
           </div>
           <div>
             <input
@@ -66,10 +65,12 @@ function NewChatRoomForm() {
               name="description"
               type="text"
               onChange={formik.handleChange}
-              value={formik.values.password}
+              value={formik.values.description}
               placeholder="Description"
             />
-            {formik.errors.password && <div>{formik.errors.password}</div>}
+            {formik.errors.description && (
+              <div>{formik.errors.description}</div>
+            )}
           </div>
           <button type="submit">Submit</button>
         </form>

@@ -1,8 +1,8 @@
 """empty message
 
-Revision ID: fe84b0da1e8b
+Revision ID: f84cab081984
 Revises: 
-Create Date: 2024-01-30 17:03:03.856962
+Create Date: 2024-02-11 17:10:58.942822
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'fe84b0da1e8b'
+revision = 'f84cab081984'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -21,6 +21,7 @@ def upgrade():
     op.create_table('chat_rooms',
     sa.Column('room_id', sa.Integer(), nullable=False),
     sa.Column('room_name', sa.String(), nullable=True),
+    sa.Column('description', sa.String(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('room_id')
     )
@@ -37,8 +38,10 @@ def upgrade():
     sa.Column('message_id', sa.Integer(), nullable=False),
     sa.Column('message', sa.String(), nullable=True),
     sa.Column('room_id', sa.Integer(), nullable=True),
+    sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['room_id'], ['chat_rooms.room_id'], ),
+    sa.ForeignKeyConstraint(['user_id'], ['users.user_id'], ),
     sa.PrimaryKeyConstraint('message_id')
     )
     op.create_table('room_participants',

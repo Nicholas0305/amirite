@@ -1,9 +1,12 @@
 import React from "react";
 import StatsNav from "./StatsNav";
-function StatsPage() {
+import { useLocation } from "react-router-dom";
+function StatsPage({}) {
+  const location = useLocation();
+  const user = location.state && location.state.user;
   return (
     <div>
-      <StatsNav />
+      <StatsNav user={user} />
     </div>
   );
 }

@@ -1,8 +1,8 @@
 import React from "react";
-function ChatCard({ message }) {
+function ChatCard({ message, users }) {
   return (
     <li>
-      <p>{message}</p>
+      <p>{message.message}</p>
     </li>
   );
 }

@@ -1,20 +1,26 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-function MainPageNav() {
+function MainPageNav({ user }) {
   const navigate = useNavigate();
 
   const navigateToHome = () => {
-    navigate("/MainPage");
+    navigate("/MainPage", { state: { user } });
   };
   const navigateToStats = () => {
-    navigate("/Stats");
+    navigate("/Stats", { state: { user } });
+  };
+  const navigateToLogin = () => {
+    navigate("/");
   };
 
   return (
     <nav className="navbar">
       <h1 onClick={navigateToHome}>Amirite</h1>
-      <button onClick={navigateToStats}>Statistics</button>
+      <p onClick={navigateToStats}>Statistics</p>
+      <p>hi</p>
+      {user && <p id="userNav"> {user.username}</p>}
+      <p onClick={navigateToLogin}>Logout</p>
     </nav>
   );
 }

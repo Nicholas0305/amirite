@@ -12,7 +12,7 @@ def login():
 
     user = User.query.filter_by(username=username).first()
     if user and user.password == password:
-        return jsonify({"success": True, "message": "Login successful"})
+        return jsonify(user.to_dict()), 201
     else:
         return jsonify({"success": False, "message": "Invalid credentials"})
 
@@ -64,6 +64,7 @@ def messages():
         new_message = Messages(
             message=form_data["message"],
             room_id=form_data["room_id"],
+            user_id=form_data["user_id"],
             created_at=current_time,
         )
 

@@ -34,10 +34,10 @@ function LoginForm() {
           throw new Error("Network response was not ok.");
         })
         .then((data) => {
-          console.log(data);
-          if (data.success) {
+          if (data) {
             // Check if login was successful
-            navigate("/MainPage"); // Navigate to the home page
+            navigate("/MainPage", { state: { user: data } });
+            console.log(data);
           } else {
             alert(data.message); // Show error message
           }

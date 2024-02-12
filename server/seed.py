@@ -81,19 +81,25 @@ if __name__ == "__main__":
             Messages(
                 message="Hello, this is a test message!",
                 room_id=1,
+                user_id=1,
                 created_at=datetime.utcnow(),
             ),
             Messages(
-                message="Another test message.", room_id=1, created_at=datetime.utcnow()
+                message="Another test message.",
+                room_id=1,
+                user_id=1,
+                created_at=datetime.utcnow(),
             ),
             Messages(
                 message="Yet another test message.",
                 room_id=2,
+                user_id=2,
                 created_at=datetime.utcnow(),
             ),
             Messages(
                 message="Testing a message in Room 3.",
                 room_id=3,
+                user_id=2,
                 created_at=datetime.utcnow(),
             ),
             # Add more messages if needed
