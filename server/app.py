@@ -2,6 +2,64 @@ from config import app
 from flask import jsonify, request, make_response
 from models import db, User, Chat_Rooms, Messages
 from datetime import datetime
+from flask_socketio import SocketIO, send, emit
+
+socketio = SocketIO(app, cors_allowed_origins="*")
+
+
+@socketio.on("connect")
+def handle_connect():
+    print("Client connected")
+
+
+@socketio.on("disconnect")
+def handle_disconnect():
+    print("Client disconnected")
+
+
+@socketio.on("message")
+def handle_message(message):
+    print("Received message:", message)
+    # Handle the received message as needed
+    # You can emit messages back to the client or perform other actions
+    send(message, broadcast=True)  # Example of broadcasting a message to all clients
+
+
+@socketio.on("fetch_messages")
+def handle_fetch_messages(data):
+    room_id = data.get("room_id")
+
+    # Query messages from the database for the specified room_id
+    messages = Messages.query.filter_by(room_id=room_id).all()
+
+    # Convert messages to a list of dictionaries
+    messages_dict = [message.to_dict() for message in messages]
+
+    # Emit the messages to the client that requested them
+    emit("fetched_messages", messages_dict)
+
+
+@socketio.on("new_message")
+def handle_new_message(data):
+    # Extract message data from the received payload
+    message_content = data.get("message")
+    room_id = data.get("room_id")
+    user_id = data.get("user_id")
+
+    # Create a new message object
+    new_message = Messages(
+        message=message_content,
+        room_id=room_id,
+        user_id=user_id,
+        # Add other fields as needed
+    )
+
+    # Save the message to the database
+    db.session.add(new_message)
+    db.session.commit()
+
+    # Broadcast the new message to all connected clients
+    emit("message_received", data, broadcast=True)
 
 
 @app.route("/login", methods=["POST"])
@@ -71,6 +129,9 @@ def messages():
         db.session.add(new_message)
         db.session.commit()
 
+        # Emit the new message to all connected clients
+        emit("new_message", new_message.to_dict(), broadcast=True)
+
         response = make_response(new_message.to_dict(), 201)
         return response
 
@@ -111,4 +172,4 @@ def users_all():
 
 
 if __name__ == "__main__":
-    app.run(port=5555, debug=True)
+    socketio.run(app, port=5555, debug=True)
