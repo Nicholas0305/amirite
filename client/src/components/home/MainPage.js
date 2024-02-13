@@ -54,6 +54,10 @@ function MainPage() {
   function handleFormClick() {
     showChatForm((prev) => !prev);
   }
+  function deleteRoom(id) {
+    const room = filtered.filter((room) => room.room_id !== id);
+    setRooms(room);
+  }
 
   return (
     <div id="mainPage-container">
@@ -70,7 +74,12 @@ function MainPage() {
           <p className="welcomeMessage">Welcome {user.username}</p>
         </div>
       )}
-      <ChatRoomList toggleComponent={toggleComponent} rooms={filtered} />
+      <ChatRoomList
+        toggleComponent={toggleComponent}
+        rooms={filtered}
+        user={user}
+        deleteRoom={deleteRoom}
+      />
       {showComponent && <Chat room={selectedRoom} user={user} url={url} />}
     </div>
   );

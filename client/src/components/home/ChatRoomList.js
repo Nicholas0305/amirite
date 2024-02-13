@@ -1,7 +1,7 @@
 import React from "react";
 import ChatRoomCard from "./ChatRoomCard";
 
-function ChatRoomList({ rooms, toggleComponent }) {
+function ChatRoomList({ rooms, toggleComponent, user, deleteRoom }) {
   return (
     <ul id="chatroomlist">
       {rooms.map((room) => {
@@ -10,6 +10,8 @@ function ChatRoomList({ rooms, toggleComponent }) {
             key={room.room_id}
             room={room}
             toggleComponent={toggleComponent}
+            user={user}
+            deleteRoom={deleteRoom}
           />
         );
       })}

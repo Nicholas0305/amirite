@@ -1,6 +1,6 @@
 from config import app
 from flask import jsonify, request, make_response
-from models import db, User, Chat_Rooms, Messages
+from models import db, User, Chat_Rooms, Messages, Room_Participants
 from datetime import datetime
 
 
@@ -40,13 +40,23 @@ def chat_rooms():
         return response
 
 
-@app.route("/chat_rooms/<int:room_id>", methods=["GET"])
+@app.route("/chat_rooms/<int:room_id>", methods=["GET", "DELETE"])
 def get_chat_room(room_id):
     chat_room = Chat_Rooms.query.get(room_id)
     if chat_room:
-        return jsonify(chat_room.to_dict())
-    else:
-        return jsonify({"error": "Chat room not found"}), 404
+        if request.method == "GET":
+
+            if chat_room:
+                return jsonify(chat_room.to_dict())
+            else:
+                return jsonify({"error": "Chat room not found"}), 404
+        elif request.method == "DELETE":
+
+            db.session.delete(chat_room)
+            db.session.commit()
+
+            response = make_response({}, 201)
+            return response
 
 
 @app.route("/messages", methods=["GET", "POST"])
@@ -107,6 +117,32 @@ def users_all():
         db.session.commit()
 
         response = make_response(new_user.to_dict(), 201)
+        return response
+
+
+@app.route("/room_participants", methods=["GET", "POST"])
+def room_participants():
+    if request.method == "GET":
+        # Retrieve all participants from the database
+        all_participants = Room_Participants.query.all()
+        # Convert participants to a list of dictionaries
+        participants_data = [participant.to_dict() for participant in all_participants]
+        # Return the list of participants as JSON
+        return jsonify({"participants": participants_data}), 200
+
+    elif request.method == "POST":
+        form_data = request.get_json()
+
+        new_participant = Room_Participants(
+            room_id=form_data["room_id"],
+            user_id=form_data["user_id"],
+            # Add other fields as needed
+        )
+
+        db.session.add(new_participant)
+        db.session.commit()
+
+        response = make_response(new_participant.to_dict(), 201)
         return response
 
 

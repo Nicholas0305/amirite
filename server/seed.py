@@ -49,16 +49,19 @@ if __name__ == "__main__":
                 room_name="Dogs vs Cats",
                 created_at=datetime.utcnow(),
                 description="This room is all about Dogs vs cats, no memes allowed.",
+                user_id=1,
             ),
             Chat_Rooms(
                 room_name="Pizza is on top",
                 created_at=datetime.utcnow(),
                 description="I believe that pizza is the best food, jump in the room if you disaggree.",
+                user_id=1,
             ),
             Chat_Rooms(
                 room_name="Ice Cream is better than cake",
                 created_at=datetime.utcnow(),
                 description="I love ice cream",
+                user_id=2,
             ),
             # Add more chat rooms if needed
         ]

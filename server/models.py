@@ -38,7 +38,7 @@ class Chat_Rooms(db.Model, SerializerMixin):
     room_name = db.Column(db.String)
     description = db.Column(db.String)
     created_at = db.Column(db.DateTime)
-
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     messages = db.relationship("Messages", back_populates="room")
     participants = db.relationship("Room_Participants", back_populates="room")
 
