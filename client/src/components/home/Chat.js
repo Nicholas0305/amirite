@@ -49,7 +49,7 @@ function Chat({ room, user }) {
               />
             </div>
           ))}
-        {edit && <input></input>}
+
         <MessageInput
           url={url}
           room={room}

@@ -1,6 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-function StatsNav({ user }) {
+
+function MainPageNav({ user }) {
   const navigate = useNavigate();
 
   const navigateToHome = () => {
@@ -12,6 +13,9 @@ function StatsNav({ user }) {
   const navigateToLeaderboards = () => {
     navigate("/Leaderboards", { state: { user } });
   };
+  const navigateToAbout = () => {
+    navigate("/About", { state: { user } });
+  };
 
   const navigateToLogin = () => {
     navigate("/");
@@ -22,10 +26,10 @@ function StatsNav({ user }) {
       <h1 onClick={navigateToHome}>Amirite</h1>
       <p onClick={navigateToStats}>Statistics</p>
       <p onClick={navigateToLeaderboards}>Leaderboard</p>
-      <p>About</p>
+      <p onClick={navigateToAbout}>About</p>
       {user && <p id="userNav"> {user.username}</p>}
       <p onClick={navigateToLogin}>Logout</p>
     </nav>
   );
 }
-export default StatsNav;
+export default MainPageNav;

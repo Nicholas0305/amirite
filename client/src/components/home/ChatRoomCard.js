@@ -1,12 +1,21 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 function ChatRoomCard({ room, toggleComponent, user, deleteRoom }) {
   const url = "http://127.0.0.1:5555";
   const isUserOwner = user.user_id === room.user_id;
-  const isUserParticipant =
-    room.participants.filter(
+  const [isUserParticipant, setIsUserParticipant] = useState(false);
+
+  useEffect(() => {
+    // Check if the user is a participant when the component mounts
+    checkUserParticipant();
+  }, []);
+
+  function checkUserParticipant() {
+    const userIsParticipant = room.participants.some(
       (participant) => participant.user_id === user.user_id
-    ).length > 0;
+    );
+    setIsUserParticipant(userIsParticipant);
+  }
 
   function handleDelete() {
     // Delete the room locally
@@ -41,10 +50,8 @@ function ChatRoomCard({ room, toggleComponent, user, deleteRoom }) {
     })
       .then((response) => {
         if (response.ok) {
-          console.log("Joined room successfully.");
-        } else {
-          console.error("Failed to join room.");
-          // Optionally, you can display an error message to the user
+          setIsUserParticipant(true);
+          return response;
         }
       })
       .catch((error) => console.error("Error:", error));
@@ -53,17 +60,9 @@ function ChatRoomCard({ room, toggleComponent, user, deleteRoom }) {
   const handleClick = (e) => {
     // Toggle component only if clicked outside of the delete button
     if (e.target.tagName.toLowerCase() !== "button") {
-      if (isUserParticipant) {
-        toggleComponent(room);
-        console.log(room);
-      }
+      toggleComponent(room);
     }
   };
-
-  // Debugging
-  console.log("user.user_id:", user.user_id);
-  console.log("room.participants:", room.participants);
-  console.log("isUserParticipant:", isUserParticipant);
 
   return (
     <div onClick={handleClick}>
@@ -73,9 +72,18 @@ function ChatRoomCard({ room, toggleComponent, user, deleteRoom }) {
         {room.participants && <p>{"People: " + room.participants.length}</p>}
         <p>{"Created on: " + room.created_at}</p>
         <span>
-          {isUserOwner && <button onClick={handleDelete}>Delete</button>}
-          {!isUserParticipant && (
-            <button onClick={addParticipant}>Join room</button>
+          {isUserOwner && (
+            <span>
+              <button onClick={handleDelete} id="delete-room-button">
+                Delete
+              </button>
+              <button>Edit Room</button>
+            </span>
+          )}
+          {!isUserParticipant && !isUserOwner && (
+            <button onClick={addParticipant} id="join-room-button">
+              Join room
+            </button>
           )}
         </span>
       </li>

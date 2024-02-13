@@ -120,6 +120,30 @@ def users_all():
         return response
 
 
+@app.route("/users/<int:id>", methods=["GET", "PATCH"])
+def users_by_id(id):
+
+    user = User.query.filter(User.user_id == id).first()
+
+    if user:
+
+        if request.method == "GET":
+
+            response = make_response(user.to_dict(), 200)
+
+        if request.method == "PATCH":
+
+            form_data = request.get_json()
+
+            for key in form_data:
+                setattr(user, key, form_data[key])
+
+            db.session.commit()
+
+            response = make_response(user.to_dict(), 201)
+            return response
+
+
 @app.route("/room_participants", methods=["GET", "POST"])
 def room_participants():
     if request.method == "GET":
