@@ -5,9 +5,10 @@
   display: flex;
   justify-content: center;
 }
-#login_form {
+
+.login_form {
   width: fit-content;
-  margin-left: 275px;
+
   margin-top: 30px;
   padding: 20px;
   background-color: #fff;
@@ -19,15 +20,16 @@
 form {
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
-#login_form label {
+.login_form label {
   font-weight: bold;
   margin-bottom: 5px;
   color: #666;
 }
 
-#login_form input,
+.login_form input,
 textarea {
   width: 100%;
   padding: 10px;
@@ -38,7 +40,7 @@ textarea {
   outline: none;
 }
 
-#login_form button {
+.login_form button {
   background-color: #4caf50;
   color: white;
   padding: 12px;
@@ -50,7 +52,7 @@ textarea {
 .navbar {
   background-color: rgb(39, 39, 39);
   color: white;
-  padding: 5px 10px;
+  padding: 15px 10px;
   border-bottom: 1px solid grey;
   position: relative;
   width: 99vw;
@@ -378,4 +380,57 @@ textarea {
 #leaderboards-title {
   display: flex;
   justify-content: center;
+}
+#register-message-container {
+  display: flex;
+  justify-content: center;
+}
+#register-message {
+  position: relative;
+  display: inline-block;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+#register-message:after {
+  content: "";
+  position: absolute;
+  bottom: -2px; /* Adjust as needed */
+  left: 0;
+  width: 100%;
+  height: 2px; /* Adjust as needed */
+  background-color: transparent;
+  transition: background-color 0.3s ease; /* Smooth transition effect */
+}
+
+#register-message:hover::after {
+  background-color: dodgerblue; /* Change the color to your desired underline color */
+}
+#register-form-container {
+  display: flex;
+  justify-content: center;
+}
+#login-message-container {
+  display: flex;
+  justify-content: center;
+}
+#login-message {
+  position: relative;
+  display: inline-block;
+  margin-left: 10px;
+  cursor: pointer;
+}
+#login-message:after {
+  content: "";
+  position: absolute;
+  bottom: -2px; /* Adjust as needed */
+  left: 0;
+  width: 100%;
+  height: 2px; /* Adjust as needed */
+  background-color: transparent;
+  transition: background-color 0.3s ease; /* Smooth transition effect */
+}
+
+#login-message:hover::after {
+  background-color: dodgerblue; /* Change the color to your desired underline color */
 }

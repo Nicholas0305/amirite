@@ -3,7 +3,7 @@ import LoginPage from "./components/login/LoginPage";
 import MainPage from "./components/home/MainPage";
 import Audio from "./components/Audio";
 import Stats from "./components/stats/StatsPage";
-import RegisterPage from "./components/register/RegisterForm";
+import RegisterPage from "./components/register/RegisterPage";
 import LeaderboardsPage from "./components/leaderboards/LeaderboardsPage";
 
 const routes = [

@@ -6,7 +6,9 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate from react
 
 function RegisterForm() {
   const navigate = useNavigate(); // Use useNavigate hook to get the navigate function
-
+  function navigateToLogin() {
+    navigate("/");
+  }
   const formSchema = yup.object({
     username: yup.string().required("Please enter username"),
     password: yup.string().required("Please enter password."),
@@ -50,44 +52,49 @@ function RegisterForm() {
   });
 
   return (
-    <Draggable>
-      <div id="login_form">
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            formik.handleSubmit(e);
-          }}
-        >
-          {" "}
-          <h2>Register</h2>
-          <div>
-            <label htmlFor="username">Username</label>
-            <input
-              id="username"
-              name="username"
-              type="text"
-              onChange={formik.handleChange}
-              value={formik.values.username}
-              placeholder="Username"
-            />
-            {formik.errors.username && <div>{formik.errors.username}</div>}
-          </div>
-          <div>
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              onChange={formik.handleChange}
-              value={formik.values.password}
-              placeholder="Password"
-            />
-            {formik.errors.password && <div>{formik.errors.password}</div>}
-          </div>
-          <button type="submit">Submit</button>
-        </form>
-      </div>
-    </Draggable>
+    <div className="login_form">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          formik.handleSubmit(e);
+        }}
+      >
+        {" "}
+        <h2>Register</h2>
+        <div>
+          <label htmlFor="username">Username</label>
+          <input
+            id="username"
+            name="username"
+            type="text"
+            onChange={formik.handleChange}
+            value={formik.values.username}
+            placeholder="Username"
+          />
+          {formik.errors.username && <div>{formik.errors.username}</div>}
+        </div>
+        <div>
+          <label htmlFor="password">Password</label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            onChange={formik.handleChange}
+            value={formik.values.password}
+            placeholder="Password"
+          />
+          {formik.errors.password && <div>{formik.errors.password}</div>}
+        </div>
+        <button type="submit">Submit</button>
+        <div id="login-message-container">
+          <p>Already a member? </p>
+          <p onClick={navigateToLogin} id="login-message">
+            {""}
+            Login here
+          </p>
+        </div>
+      </form>
+    </div>
   );
 }
 

@@ -3,7 +3,7 @@ import { useFormik } from "formik";
 import * as yup from "yup";
 import Draggable from "react-draggable";
 
-function NewChatRoomForm() {
+function NewChatRoomForm({ rooms, setRooms }) {
   const formSchema = yup.object({
     room_name: yup.string().required("Please enter a room name."),
     description: yup.string().required("Please enter a description."),
@@ -28,6 +28,9 @@ function NewChatRoomForm() {
             return res.json();
           }
           throw new Error("Network response was not ok.");
+        })
+        .then((data) => {
+          setRooms([...rooms, data]); // Assuming the response data is the new room object
         })
         .catch((error) => {
           console.error("There was a problem with the fetch operation:", error);

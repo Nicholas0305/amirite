@@ -64,7 +64,7 @@ function MainPage() {
           +
         </button>
       </div>
-      {chatForm && <NewChatRoomForm />}
+      {chatForm && <NewChatRoomForm rooms={rooms} setRooms={setRooms} />}
       {user && showWelcomeMessage && (
         <div id="welcomeMessage-container">
           <p className="welcomeMessage">Welcome {user.username}</p>

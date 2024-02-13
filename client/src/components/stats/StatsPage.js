@@ -1,6 +1,7 @@
 import React from "react";
 import StatsNav from "./StatsNav";
 import StatsCard from "./StatsCard";
+
 import { useLocation } from "react-router-dom";
 function StatsPage() {
   const location = useLocation();

@@ -1,7 +1,8 @@
+// Chat.js
 import React, { useState, useEffect } from "react";
 import ChatCard from "./ChatCard";
 import MessageInput from "./MessageInput";
-import EditMessageButton from "./EditMessageButton";
+
 function Chat({ room, user }) {
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
@@ -29,14 +30,6 @@ function Chat({ room, user }) {
     return user ? user.username : "Unknown User";
   };
 
-  const isCurrentUserMessage = (messageUserId) => {
-    return messageUserId === user.user_id;
-  };
-  const handleEditClick = () => {
-    setEdit((prev) => !prev);
-    console.log("clicked");
-  };
-
   return (
     <div id="chat-container">
       <ul id="chat-list">
@@ -54,9 +47,6 @@ function Chat({ room, user }) {
                 edit={edit}
                 id={message.message_id}
               />
-              {isCurrentUserMessage(message.user_id) && (
-                <button onClick={handleEditClick}>Edit</button>
-              )}
             </div>
           ))}
         {edit && <input></input>}

@@ -14,7 +14,6 @@ class User(db.Model, SerializerMixin):
     dislikes = db.Column(db.Integer)
     created_at = db.Column(db.DateTime)
 
-    # Define the relationship with Room_Participants
     rooms = db.relationship("Room_Participants", back_populates="user")
 
     serialize_rules = ("-rooms.user",)

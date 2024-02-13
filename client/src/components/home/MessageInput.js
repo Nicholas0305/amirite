@@ -1,8 +1,8 @@
+// MessageInput.js
 import React, { useState } from "react";
 
-function MessageInput({ room, setMessages, user }) {
+function MessageInput({ url, room, messages, setMessages, user }) {
   const [message, setMessage] = useState("");
-  const url = "http://127.0.0.1:5555";
 
   function addMessage(e) {
     e.preventDefault();
@@ -28,10 +28,11 @@ function MessageInput({ room, setMessages, user }) {
         }
       })
       .then((data) => {
-        setMessages((prevMessages) => [...prevMessages, data]);
-
-        console.log("message state");
-        setMessage("");
+        const updatedMessages = Array.isArray(messages)
+          ? [...messages, data]
+          : [data];
+        setMessages(updatedMessages);
+        setMessage(""); // Reset message input
       })
       .catch((error) => {
         console.error("Error sending message:", error);
