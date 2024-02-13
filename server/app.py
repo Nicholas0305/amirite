@@ -62,6 +62,35 @@ def handle_new_message(data):
     emit("message_received", data, broadcast=True)
 
 
+@socketio.on("fetch_chat_rooms")
+def handle_fetch_chat_rooms():
+    chat_rooms = Chat_Rooms.query.all()
+    chat_rooms_dict = [chat_room.to_dict() for chat_room in chat_rooms]
+    emit("fetched_chat_rooms", chat_rooms_dict)
+
+
+@socketio.on("new_chat_room")
+def handle_new_chat_room(new_room_data):
+    # Extract new room data from the received payload
+    room_name = new_room_data.get("room_name")
+    description = new_room_data.get("description")
+    # Add other necessary data fields
+
+    # Create a new chat room object
+    new_room = Chat_Rooms(
+        room_name=room_name,
+        description=description,
+        # Add other fields as needed
+    )
+
+    # Save the new chat room to the database
+    db.session.add(new_room)
+    db.session.commit()
+
+    # Broadcast the new chat room to all connected clients
+    emit("new_chat_room_added", new_room.to_dict(), broadcast=True)
+
+
 @app.route("/login", methods=["POST"])
 def login():
     data = request.json

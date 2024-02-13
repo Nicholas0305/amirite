@@ -5,6 +5,7 @@ import SearchBar from "./SearchBar";
 import Chat from "./Chat";
 import NewChatRoomForm from "./NewChatRoomForm";
 import { useLocation } from "react-router-dom";
+import io from "socket.io-client";
 
 function MainPage() {
   const url = "http://127.0.0.1:5555";
@@ -16,15 +17,24 @@ function MainPage() {
   const [showComponent, setShowComponent] = useState(false);
   const [chatForm, showChatForm] = useState(false);
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
+  const socket = io("http://127.0.0.1:5555"); // Replace with your server URL
 
   useEffect(() => {
-    fetch(url + "/chat_rooms")
-      .then((res) => res.json())
-      .then((chat_rooms) => {
-        setRooms(chat_rooms);
-        console.log("Chat Rooms:", chat_rooms);
-      })
-      .catch((error) => console.error("Error fetching data:", error));
+    socket.emit("fetch_chat_rooms");
+
+    socket.on("fetched_chat_rooms", (chatRooms) => {
+      setRooms(chatRooms);
+      console.log("Chat Rooms:", chatRooms);
+    });
+
+    socket.on("new_chat_room_created", (newRoom) => {
+      setRooms((prevRooms) => [...prevRooms, newRoom]);
+    });
+
+    return () => {
+      socket.off("fetched_chat_rooms");
+      socket.off("new_chat_room_created");
+    };
   }, []);
 
   useEffect(() => {
@@ -43,13 +53,13 @@ function MainPage() {
     console.log(room);
   };
 
-  const filtered = rooms.filter((room) =>
-    room.room_name.toUpperCase().includes(search.toUpperCase())
-  );
-
   const updateSearch = (e) => {
     setSearch(e.target.value);
   };
+
+  function handleFormSubmit(newRoomData) {
+    socket.emit("new_chat_room", newRoomData);
+  }
 
   function handleFormClick() {
     showChatForm((prev) => !prev);
@@ -64,13 +74,19 @@ function MainPage() {
           +
         </button>
       </div>
-      {chatForm && <NewChatRoomForm rooms={rooms} setRooms={setRooms} />}
+      {chatForm && (
+        <NewChatRoomForm
+          rooms={rooms}
+          setRooms={setRooms}
+          onFormSubmit={handleFormSubmit}
+        />
+      )}
       {user && showWelcomeMessage && (
         <div id="welcomeMessage-container">
           <p className="welcomeMessage">Welcome {user.username}</p>
         </div>
       )}
-      <ChatRoomList toggleComponent={toggleComponent} rooms={filtered} />
+      <ChatRoomList toggleComponent={toggleComponent} rooms={rooms} />
       {showComponent && <Chat room={selectedRoom} user={user} url={url} />}
     </div>
   );

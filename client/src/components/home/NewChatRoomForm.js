@@ -2,6 +2,9 @@ import React from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import Draggable from "react-draggable";
+import io from "socket.io-client";
+
+const socket = io("http://127.0.0.1:5555"); // Replace with your server URL
 
 function NewChatRoomForm({ rooms, setRooms }) {
   const formSchema = yup.object({
@@ -16,40 +19,21 @@ function NewChatRoomForm({ rooms, setRooms }) {
     },
     validationSchema: formSchema,
     onSubmit: (values, { setSubmitting }) => {
-      fetch("http://127.0.0.1:5555/chat_rooms", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      })
-        .then((res) => {
-          if (res.ok) {
-            return res.json();
-          }
-          throw new Error("Network response was not ok.");
-        })
-        .then((data) => {
-          setRooms([...rooms, data]); // Assuming the response data is the new room object
-        })
-        .catch((error) => {
-          console.error("There was a problem with the fetch operation:", error);
-        })
-        .finally(() => {
-          setSubmitting(false);
-        });
+      socket.emit("new_chat_room", values);
+
+      // Assuming the server will emit "new_chat_room_created" event with the new room data
+      socket.on("new_chat_room_created", (newRoom) => {
+        setRooms([...rooms, newRoom]);
+      });
+
+      setSubmitting(false);
     },
   });
 
   return (
     <Draggable>
       <div id="newChatRoomForm">
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            formik.handleSubmit(e);
-          }}
-        >
+        <form onSubmit={formik.handleSubmit}>
           <h2>New Chat Room</h2>
           <div>
             <input
