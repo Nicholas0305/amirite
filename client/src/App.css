@@ -434,3 +434,39 @@ textarea {
 #login-message:hover::after {
   background-color: dodgerblue; /* Change the color to your desired underline color */
 }
+.about-page-container {
+  display: flex;
+  justify-content: center;
+
+  height: 50vh;
+}
+
+.about-card {
+  margin-top: 10px;
+  width: 80%;
+  max-width: 600px;
+  padding: 20px;
+  background-color: #f7f7f7;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Horizontal, Vertical, Blur, Spread, Color */
+}
+
+.about-card h1 {
+  font-size: 24px;
+  margin-bottom: 16px;
+}
+
+.about-card p {
+  font-size: 16px;
+  margin-bottom: 16px;
+}
+
+.about-card ul {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.about-card li {
+  font-size: 16px;
+  margin-bottom: 8px;
+}

@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-function LeaderboardsNav({ user }) {
+function MainPageNav({ user }) {
   const navigate = useNavigate();
 
   const navigateToHome = () => {
@@ -13,6 +13,9 @@ function LeaderboardsNav({ user }) {
   const navigateToLeaderboards = () => {
     navigate("/Leaderboards", { state: { user } });
   };
+  const navigateToAbout = () => {
+    navigate("/About", { state: { user } });
+  };
 
   const navigateToLogin = () => {
     navigate("/");
@@ -23,10 +26,10 @@ function LeaderboardsNav({ user }) {
       <h1 onClick={navigateToHome}>Amirite</h1>
       <p onClick={navigateToStats}>Statistics</p>
       <p onClick={navigateToLeaderboards}>Leaderboard</p>
-      <p>About</p>
+      <p onClick={navigateToAbout}>About</p>
       {user && <p id="userNav"> {user.username}</p>}
       <p onClick={navigateToLogin}>Logout</p>
     </nav>
   );
 }
-export default LeaderboardsNav;
+export default MainPageNav;
