@@ -29,11 +29,15 @@ function Chat({ room, user }) {
     // Fetch initial messages when component mounts
     socket.emit("fetch_messages", { room_id: room.room_id });
 
+    socket.on("fetched_messages", (fetchedMessages) => {
+      setMessages(fetchedMessages);
+    });
+
     return () => {
       // Clean up event listeners
       socket.disconnect();
     };
-  }, [room]); // Re-run effect when room changes
+  }, []); // Re-run effect when room changes
 
   return (
     <div id="chat-container">
