@@ -63,6 +63,31 @@ def handle_new_message(data):
     emit("message_received", data, broadcast=True)
 
 
+@app.route("/users", methods=["GET", "POST"])
+def users_all():
+    if request.method == "GET":
+        users = User.query.all()
+        users_dict = [user.to_dict() for user in users]
+        return jsonify(users_dict)
+    elif request.method == "POST":
+        form_data = request.get_json()
+        current_time = datetime.utcnow()
+        new_user = User(
+            username=form_data["username"],
+            password=generate_password_hash(form_data["password"]),
+            likes=0,
+            dislikes=0,
+            created_at=current_time,
+            # Add other fields as needed
+        )
+
+        db.session.add(new_user)
+        db.session.commit()
+
+        response = make_response(new_user.to_dict(), 201)
+        return response
+
+
 @socketio.on("fetch_chat_rooms")
 def handle_fetch_chat_rooms():
     chat_rooms = Chat_Rooms.query.all()
