@@ -3,7 +3,7 @@ from flask import jsonify, request, make_response
 from models import db, User, Chat_Rooms, Messages, Room_Participants
 from datetime import datetime
 from flask_socketio import SocketIO, send, emit
-
+from werkzeug.security import generate_password_hash, check_password_hash
 
 socketio = SocketIO(app, cors_allowed_origins="*")
 
