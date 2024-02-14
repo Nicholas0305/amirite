@@ -67,7 +67,13 @@ function Chat({ room, user }) {
           ))}
 
         {edit && <input></input>}
-        <MessageInput user={user} socket={socket} room={room} />
+        <MessageInput
+          user={user}
+          socket={socket}
+          room={room}
+          messages={messages}
+          setMessages={setMessages}
+        />
       </ul>
     </div>
   );

@@ -3,7 +3,7 @@
 Form is structered using Formik */
 import React, { useState } from "react";
 
-function MessageInput({ user, socket, room }) {
+function MessageInput({ user, socket, room, messages, setMessages }) {
   const [message, setMessage] = useState("");
 
   const addMessage = (e) => {
