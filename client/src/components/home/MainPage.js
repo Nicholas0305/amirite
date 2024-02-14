@@ -71,7 +71,9 @@ function MainPage() {
     const room = filtered.filter((room) => room.room_id !== id);
     setRooms(room);
   }
-
+  const filtered = rooms.filter((room) =>
+    room.room_name.toUpperCase().includes(search.toUpperCase())
+  );
   return (
     <div id="mainPage-container">
       <MainPageNav user={user} />

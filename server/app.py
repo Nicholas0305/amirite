@@ -186,29 +186,30 @@ def get_messages_by_room(room_id):
         return jsonify({"error": "No messages found for this room"}), 404
 
 
-@app.route("/users", methods=["GET", "POST"])
+@socketio.on("users_all")
 def users_all():
-    if request.method == "GET":
-        users = User.query.all()
-        users_dict = [user.to_dict() for user in users]
-        return jsonify(users_dict)
-    elif request.method == "POST":
-        form_data = request.get_json()
-        current_time = datetime.utcnow()
-        new_user = User(
-            username=form_data["username"],
-            password=generate_password_hash(form_data["password"]),
-            likes=0,
-            dislikes=0,
-            created_at=current_time,
-            # Add other fields as needed
-        )
+    users = User.query.all()
+    users_dict = [user.to_dict() for user in users]
+    emit("users_all_response", users_dict)
 
-        db.session.add(new_user)
-        db.session.commit()
 
-        response = make_response(new_user.to_dict(), 201)
-        return response
+@socketio.on("add_user")
+def add_user(data):
+    form_data = data
+    current_time = datetime.utcnow()
+    new_user = User(
+        username=form_data["username"],
+        password=generate_password_hash(form_data["password"]),
+        likes=0,
+        dislikes=0,
+        created_at=current_time,
+        # Add other fields as needed
+    )
+
+    db.session.add(new_user)
+    db.session.commit()
+
+    emit("user_added", new_user.to_dict())
 
 
 @app.route("/users/<int:id>", methods=["GET", "PATCH"])
