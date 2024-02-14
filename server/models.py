@@ -19,6 +19,22 @@ class User(db.Model, SerializerMixin):
     serialize_rules = ("-rooms.user",)
 
 
+@validates("username")
+def validates_username(self, key, value):
+    if len(value) < 0 & len(value) > 16:
+        raise ValueError
+    else:
+        return value
+
+
+@validates("password")
+def validates_password(self, key, value):
+    if len(value) < 0 & len(value) > 16:
+        raise ValueError
+    else:
+        return value
+
+
 class Messages(db.Model, SerializerMixin):
     __tablename__ = "messages"
     message_id = db.Column(db.Integer, primary_key=True)

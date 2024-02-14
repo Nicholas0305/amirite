@@ -77,7 +77,7 @@ function ChatRoomCard({ room, toggleComponent, user, deleteRoom }) {
               <button onClick={handleDelete} id="delete-room-button">
                 Delete
               </button>
-              <button>Edit Room</button>
+              <button className="edit-button">Edit Room</button>
             </span>
           )}
           {!isUserParticipant && !isUserOwner && (

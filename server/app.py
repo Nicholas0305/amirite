@@ -2,6 +2,7 @@ from config import app
 from flask import jsonify, request, make_response
 from models import db, User, Chat_Rooms, Messages, Room_Participants
 from datetime import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 @app.route("/login", methods=["POST"])
@@ -11,10 +12,10 @@ def login():
     password = data.get("password")
 
     user = User.query.filter_by(username=username).first()
-    if user and user.password == password:
+    if user and check_password_hash(user.password, password):
         return jsonify({"success": True, **user.to_dict()}), 201
     else:
-        return jsonify({"success": False, "message": "Invalid credentials"})
+        return jsonify({"success": False}), 401
 
 
 @app.route("/chat_rooms", methods=["GET", "POST"])
@@ -106,7 +107,7 @@ def users_all():
         current_time = datetime.utcnow()
         new_user = User(
             username=form_data["username"],
-            password=form_data["password"],
+            password=generate_password_hash(form_data["password"]),
             likes=0,
             dislikes=0,
             created_at=current_time,
