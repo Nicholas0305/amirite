@@ -2,7 +2,122 @@ from config import app
 from flask import jsonify, request, make_response
 from models import db, User, Chat_Rooms, Messages, Room_Participants
 from datetime import datetime
+from flask_socketio import SocketIO, send, emit
 from werkzeug.security import generate_password_hash, check_password_hash
+
+socketio = SocketIO(app, cors_allowed_origins="*")
+
+
+@socketio.on("connect")
+def handle_connect():
+    print("Client connected")
+
+
+@socketio.on("disconnect")
+def handle_disconnect():
+    print("Client disconnected")
+
+
+@socketio.on("message")
+def handle_message(data):
+    room_id = data.get("room_id")  # Assuming room_id is provided in the message data
+    message = data.get("message")
+
+    print(f"Received message '{message}' for room {room_id}")
+
+    # Broadcast the message to sockets in the specified room
+    emit("message", message, room=room_id)
+
+
+@socketio.on("fetch_messages")
+def handle_fetch_messages(data):
+    room_id = data.get("room_id")
+
+    # Query messages from the database for the specified room_id
+    messages = Messages.query.filter_by(room_id=room_id).all()
+
+    # Convert messages to a list of dictionaries
+    messages_dict = [message.to_dict() for message in messages]
+
+    # Emit the messages to the client that requested them
+    emit("fetched_messages", messages_dict)
+
+
+@socketio.on("new_message")
+def handle_new_message(data):
+    # Extract message data from the received payload
+    message_content = data.get("message")
+    room_id = data.get("room_id")
+    user_id = data.get("user_id")
+
+    # Create a new message object
+    new_message = Messages(
+        message=message_content,
+        room_id=room_id,
+        user_id=user_id,
+        # Add other fields as needed
+    )
+
+    # Save the message to the database
+    db.session.add(new_message)
+    db.session.commit()
+
+    # Broadcast the new message to all connected clients
+    emit("message_received", data, broadcast=True)
+
+
+@app.route("/users", methods=["GET", "POST"])
+def users_all():
+    if request.method == "GET":
+        users = User.query.all()
+        users_dict = [user.to_dict() for user in users]
+        return jsonify(users_dict)
+    elif request.method == "POST":
+        form_data = request.get_json()
+        current_time = datetime.utcnow()
+        new_user = User(
+            username=form_data["username"],
+            password=generate_password_hash(form_data["password"]),
+            likes=0,
+            dislikes=0,
+            created_at=current_time,
+            # Add other fields as needed
+        )
+
+        db.session.add(new_user)
+        db.session.commit()
+
+        response = make_response(new_user.to_dict(), 201)
+        return response
+
+
+@socketio.on("fetch_chat_rooms")
+def handle_fetch_chat_rooms():
+    chat_rooms = Chat_Rooms.query.all()
+    chat_rooms_dict = [chat_room.to_dict() for chat_room in chat_rooms]
+    emit("fetched_chat_rooms", chat_rooms_dict)
+
+
+@socketio.on("new_chat_room")
+def handle_new_chat_room(new_room_data):
+    # Extract new room data from the received payload
+    room_name = new_room_data.get("room_name")
+    description = new_room_data.get("description")
+    # Add other necessary data fields
+
+    # Create a new chat room object
+    new_room = Chat_Rooms(
+        room_name=room_name,
+        description=description,
+        # Add other fields as needed
+    )
+
+    # Save the new chat room to the database
+    db.session.add(new_room)
+    db.session.commit()
+
+    # Broadcast the new chat room to all connected clients
+    emit("new_chat_room_added", new_room.to_dict(), broadcast=True)
 
 
 @app.route("/login", methods=["POST"])
@@ -82,6 +197,9 @@ def messages():
         db.session.add(new_message)
         db.session.commit()
 
+        # Emit the new message to all connected clients
+        emit("new_message", new_message.to_dict(), broadcast=True)
+
         response = make_response(new_message.to_dict(), 201)
         return response
 
@@ -96,29 +214,30 @@ def get_messages_by_room(room_id):
         return jsonify({"error": "No messages found for this room"}), 404
 
 
-@app.route("/users", methods=["GET", "POST"])
+@socketio.on("users_all")
 def users_all():
-    if request.method == "GET":
-        users = User.query.all()
-        users_dict = [user.to_dict() for user in users]
-        return jsonify(users_dict)
-    elif request.method == "POST":
-        form_data = request.get_json()
-        current_time = datetime.utcnow()
-        new_user = User(
-            username=form_data["username"],
-            password=generate_password_hash(form_data["password"]),
-            likes=0,
-            dislikes=0,
-            created_at=current_time,
-            # Add other fields as needed
-        )
+    users = User.query.all()
+    users_dict = [user.to_dict() for user in users]
+    emit("users_all_response", users_dict)
 
-        db.session.add(new_user)
-        db.session.commit()
 
-        response = make_response(new_user.to_dict(), 201)
-        return response
+@socketio.on("add_user")
+def add_user(data):
+    form_data = data
+    current_time = datetime.utcnow()
+    new_user = User(
+        username=form_data["username"],
+        password=generate_password_hash(form_data["password"]),
+        likes=0,
+        dislikes=0,
+        created_at=current_time,
+        # Add other fields as needed
+    )
+
+    db.session.add(new_user)
+    db.session.commit()
+
+    emit("user_added", new_user.to_dict())
 
 
 @app.route("/users/<int:id>", methods=["GET", "PATCH"])
@@ -172,4 +291,4 @@ def room_participants():
 
 
 if __name__ == "__main__":
-    app.run(port=5555, debug=True)
+    socketio.run(app, port=5555, debug=True)
