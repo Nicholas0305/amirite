@@ -4,6 +4,7 @@ from models import db, User, Chat_Rooms, Messages, Room_Participants
 from datetime import datetime
 from flask_socketio import SocketIO, send, emit
 
+
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 
