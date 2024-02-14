@@ -19,11 +19,14 @@ def handle_disconnect():
 
 
 @socketio.on("message")
-def handle_message(message):
-    print("Received message:", message)
-    # Handle the received message as needed
-    # You can emit messages back to the client or perform other actions
-    send(message, broadcast=True)  # Example of broadcasting a message to all clients
+def handle_message(data):
+    room_id = data.get("room_id")  # Assuming room_id is provided in the message data
+    message = data.get("message")
+
+    print(f"Received message '{message}' for room {room_id}")
+
+    # Broadcast the message to sockets in the specified room
+    emit("message", message, room=room_id)
 
 
 @socketio.on("fetch_messages")
