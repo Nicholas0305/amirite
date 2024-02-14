@@ -30,13 +30,14 @@ function Chat({ room, user }) {
 
     socket.on("fetched_messages", (fetchedMessages) => {
       setMessages(fetchedMessages);
+      console.log(fetchedMessages);
     });
 
     return () => {
       // Clean up event listeners
       socket.disconnect();
     };
-  }, [room]); // Re-run effect when room changes
+  }, []); // Re-run effect when room changes
 
   // Function to handle room change
   const handleRoomChange = (newRoom) => {

@@ -11,15 +11,24 @@ function MessageInput({ user, socket, room, messages, setMessages }) {
 
     // Send message to WebSocket server
     socket.emit("new_message", {
-      message,
+      message: message,
       room_id: room.room_id,
       user_id: user.user_id,
     });
-    console.log(message);
-    // Reset message input
+
+    // Create a new message object
+    const newMessage = {
+      message: message,
+      username: user.username, // Assuming you have the username available in the user object
+      // Add other necessary properties here
+    };
+
+    // Update the messages state with the new message
+    setMessages([...messages, newMessage]);
+
+    // Reset the message input field
     setMessage("");
   };
-
   return (
     <form id="form-container" onSubmit={addMessage}>
       <input
