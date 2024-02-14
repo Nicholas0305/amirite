@@ -26,7 +26,7 @@ def handle_message(data):
     print(f"Received message '{message}' for room {room_id}")
 
     # Broadcast the message to sockets in the specified room
-    emit("message", message, room=room_id, broadcast=True)
+    emit("message", message, broadcast=True)
 
 
 @socketio.on("fetch_messages")
@@ -57,13 +57,13 @@ def handle_new_message(data):
         user_id=user_id,
         # Add other fields as needed
     )
-
+    print(f"Received message '{message}' for room {room_id}")
     # Save the message to the database
     db.session.add(new_message)
     db.session.commit()
 
     # Broadcast the new message to clients in the specified room
-    emit("message", message, room=room_id, broadcast=True)
+    emit("message", message, room_id=room_id, broadcast=True)
 
 
 @app.route("/users", methods=["GET", "POST"])
@@ -212,32 +212,6 @@ def get_messages_by_room(room_id):
         return jsonify(messages_dict)
     else:
         return jsonify({"error": "No messages found for this room"}), 404
-
-
-@socketio.on("users_all")
-def users_all():
-    users = User.query.all()
-    users_dict = [user.to_dict() for user in users]
-    emit("users_all_response", users_dict)
-
-
-@socketio.on("add_user")
-def add_user(data):
-    form_data = data
-    current_time = datetime.utcnow()
-    new_user = User(
-        username=form_data["username"],
-        password=generate_password_hash(form_data["password"]),
-        likes=0,
-        dislikes=0,
-        created_at=current_time,
-        # Add other fields as needed
-    )
-
-    db.session.add(new_user)
-    db.session.commit()
-
-    emit("user_added", new_user.to_dict())
 
 
 @app.route("/users/<int:id>", methods=["GET", "PATCH"])

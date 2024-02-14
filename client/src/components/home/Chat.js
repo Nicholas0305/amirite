@@ -19,9 +19,9 @@ function Chat({ room, user }) {
       console.log("Disconnected from WebSocket server");
     });
 
-    socket.on("message", (message) => {
-      setMessages((prevMessages) => [...prevMessages, message]);
-      console.log(message);
+    socket.on("new_message", (new_message) => {
+      setMessages((prevMessages) => [...prevMessages, new_message]);
+      console.log(new_message);
     });
 
     // Fetch initial messages when component mounts
@@ -30,7 +30,7 @@ function Chat({ room, user }) {
     socket.on("fetched_messages", (fetchedMessages) => {
       setMessages(fetchedMessages);
     });
-  }, [room]); // Re-run effect when room changes
+  }, [messages]); // Re-run effect when room changes
   return (
     <div id="chat-container">
       <ul id="chat-list">
