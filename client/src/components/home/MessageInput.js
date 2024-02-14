@@ -1,4 +1,6 @@
 // MessageInput.js
+/*Message Input component that allows users to send/post messages to chat rooms
+Form is structered using Formik */
 import React, { useState } from "react";
 
 function MessageInput({ user, socket }) {

@@ -13,7 +13,11 @@ function StatsCard({ user }) {
       {
         label: "Likes vs Dislikes",
         data: [user.likes, user.dislikes],
-        backgroundColor: ["green", "red"],
+        backgroundColor: ["rgba(75,192,192,0.2)", "rgba(255,99,132,0.2)"],
+        borderColor: ["rgba(75,192,192,1)", "rgba(255,99,132,1)"],
+        borderWidth: 1,
+        hoverBackgroundColor: ["rgba(75,192,192,0.4)", "rgba(255,99,132,0.4)"],
+        hoverBorderColor: ["rgba(75,192,192,1)", "rgba(255,99,132,1)"],
       },
     ],
   };

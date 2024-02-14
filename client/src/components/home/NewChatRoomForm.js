@@ -1,3 +1,8 @@
+//NewChatRoomForm.js
+/*
+Form that renders when the + button is clicked on the main page. Allows the user to post a new chat room to the database
+Form utilizes Formik
+*/
 import React from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
@@ -7,11 +12,12 @@ import io from "socket.io-client";
 const socket = io("http://127.0.0.1:5555"); // Replace with your server URL
 
 function NewChatRoomForm({ rooms, setRooms }) {
+  //Formik fields
   const formSchema = yup.object({
     room_name: yup.string().required("Please enter a room name."),
     description: yup.string().required("Please enter a description."),
   });
-
+  //Formik values
   const formik = useFormik({
     initialValues: {
       room_name: "",
@@ -29,7 +35,7 @@ function NewChatRoomForm({ rooms, setRooms }) {
       setSubmitting(false);
     },
   });
-
+  //Input form for new Chat room
   return (
     <Draggable>
       <div id="newChatRoomForm">

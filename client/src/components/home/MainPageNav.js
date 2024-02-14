@@ -1,3 +1,5 @@
+//MainPageNav.js
+//Main page Navbar, houses all client side routes
 import React from "react";
 import { useNavigate } from "react-router-dom";
 

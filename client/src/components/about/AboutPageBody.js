@@ -22,6 +22,7 @@ function AboutPageBody() {
           <li>Audio message implementation</li>
           <li>Real time message updates</li>
         </ul>
+        <p>-Amirite Dev, Nicholas Jernigin</p>
       </div>
     </div>
   );

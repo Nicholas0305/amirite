@@ -19,6 +19,22 @@ class User(db.Model, SerializerMixin):
     serialize_rules = ("-rooms.user",)
 
 
+@validates("username")
+def validates_username(self, key, value):
+    if len(value) < 0 & len(value) > 16:
+        raise ValueError
+    else:
+        return value
+
+
+@validates("password")
+def validates_password(self, key, value):
+    if len(value) < 0 & len(value) > 16:
+        raise ValueError
+    else:
+        return value
+
+
 class Messages(db.Model, SerializerMixin):
     __tablename__ = "messages"
     message_id = db.Column(db.Integer, primary_key=True)
@@ -38,7 +54,7 @@ class Chat_Rooms(db.Model, SerializerMixin):
     room_name = db.Column(db.String)
     description = db.Column(db.String)
     created_at = db.Column(db.DateTime)
-
+    user_id = db.Column(db.Integer, db.ForeignKey("users.user_id"))
     messages = db.relationship("Messages", back_populates="room")
     participants = db.relationship("Room_Participants", back_populates="room")
 

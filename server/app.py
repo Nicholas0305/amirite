@@ -1,6 +1,6 @@
 from config import app
 from flask import jsonify, request, make_response
-from models import db, User, Chat_Rooms, Messages
+from models import db, User, Chat_Rooms, Messages, Room_Participants
 from datetime import datetime
 from flask_socketio import SocketIO, send, emit
 
@@ -98,10 +98,10 @@ def login():
     password = data.get("password")
 
     user = User.query.filter_by(username=username).first()
-    if user and user.password == password:
+    if user and check_password_hash(user.password, password):
         return jsonify({"success": True, **user.to_dict()}), 201
     else:
-        return jsonify({"success": False, "message": "Invalid credentials"})
+        return jsonify({"success": False}), 401
 
 
 @app.route("/chat_rooms", methods=["GET", "POST"])
@@ -127,13 +127,23 @@ def chat_rooms():
         return response
 
 
-@app.route("/chat_rooms/<int:room_id>", methods=["GET"])
+@app.route("/chat_rooms/<int:room_id>", methods=["GET", "DELETE"])
 def get_chat_room(room_id):
     chat_room = Chat_Rooms.query.get(room_id)
     if chat_room:
-        return jsonify(chat_room.to_dict())
-    else:
-        return jsonify({"error": "Chat room not found"}), 404
+        if request.method == "GET":
+
+            if chat_room:
+                return jsonify(chat_room.to_dict())
+            else:
+                return jsonify({"error": "Chat room not found"}), 404
+        elif request.method == "DELETE":
+
+            db.session.delete(chat_room)
+            db.session.commit()
+
+            response = make_response({}, 201)
+            return response
 
 
 @app.route("/messages", methods=["GET", "POST"])
@@ -186,7 +196,7 @@ def users_all():
         current_time = datetime.utcnow()
         new_user = User(
             username=form_data["username"],
-            password=form_data["password"],
+            password=generate_password_hash(form_data["password"]),
             likes=0,
             dislikes=0,
             created_at=current_time,
@@ -197,6 +207,56 @@ def users_all():
         db.session.commit()
 
         response = make_response(new_user.to_dict(), 201)
+        return response
+
+
+@app.route("/users/<int:id>", methods=["GET", "PATCH"])
+def users_by_id(id):
+
+    user = User.query.filter(User.user_id == id).first()
+
+    if user:
+
+        if request.method == "GET":
+
+            response = make_response(user.to_dict(), 200)
+
+        if request.method == "PATCH":
+
+            form_data = request.get_json()
+
+            for key in form_data:
+                setattr(user, key, form_data[key])
+
+            db.session.commit()
+
+            response = make_response(user.to_dict(), 201)
+            return response
+
+
+@app.route("/room_participants", methods=["GET", "POST"])
+def room_participants():
+    if request.method == "GET":
+        # Retrieve all participants from the database
+        all_participants = Room_Participants.query.all()
+        # Convert participants to a list of dictionaries
+        participants_data = [participant.to_dict() for participant in all_participants]
+        # Return the list of participants as JSON
+        return jsonify({"participants": participants_data}), 200
+
+    elif request.method == "POST":
+        form_data = request.get_json()
+
+        new_participant = Room_Participants(
+            room_id=form_data["room_id"],
+            user_id=form_data["user_id"],
+            # Add other fields as needed
+        )
+
+        db.session.add(new_participant)
+        db.session.commit()
+
+        response = make_response(new_participant.to_dict(), 201)
         return response
 
 

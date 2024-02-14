@@ -20,9 +20,8 @@ Advanced deliverables:
 
 New Technologies:
 
-1. Audio implementation
-2. Cookies
-3. Charts
+1. Password hashing
+2. Charts
 
 DB Diagram:
 

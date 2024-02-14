@@ -1,3 +1,5 @@
+//MainPage.js
+//Main page component that houses all the sub components within the home directory
 import React, { useEffect, useState } from "react";
 import MainPageNav from "./MainPageNav";
 import ChatRoomList from "./ChatRoomList";
@@ -36,7 +38,7 @@ function MainPage() {
       socket.off("new_chat_room_created");
     };
   }, []);
-
+  //Welcome message for the user, lasts 5 seconds
   useEffect(() => {
     const welcomeMessageTimer = setTimeout(() => {
       setShowWelcomeMessage(false);
@@ -46,7 +48,7 @@ function MainPage() {
       clearTimeout(welcomeMessageTimer);
     };
   }, []);
-
+  //Function that toggles a room if clicked on
   const toggleComponent = (room) => {
     setSelectedRoom(room);
     setShowComponent(true);
@@ -63,6 +65,11 @@ function MainPage() {
 
   function handleFormClick() {
     showChatForm((prev) => !prev);
+  }
+  //Function that allows for the deletion of a chat room
+  function deleteRoom(id) {
+    const room = filtered.filter((room) => room.room_id !== id);
+    setRooms(room);
   }
 
   return (

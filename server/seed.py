@@ -1,6 +1,7 @@
 from config import app
 from models import db, User, Chat_Rooms, Room_Participants, Messages
 from datetime import datetime
+from werkzeug.security import generate_password_hash, check_password_hash
 
 if __name__ == "__main__":
     with app.app_context():
@@ -19,21 +20,21 @@ if __name__ == "__main__":
         users = [
             User(
                 username="user1",
-                password="password1",
+                password=generate_password_hash("password1"),
                 likes=10,
                 dislikes=5,
                 created_at=datetime.utcnow(),
             ),
             User(
                 username="user2",
-                password="password2",
+                password=generate_password_hash("password2"),
                 likes=15,
                 dislikes=3,
                 created_at=datetime.utcnow(),
             ),
             User(
                 username="user3",
-                password="password3",
+                password=generate_password_hash("password3"),
                 likes=20,
                 dislikes=8,
                 created_at=datetime.utcnow(),
@@ -49,16 +50,19 @@ if __name__ == "__main__":
                 room_name="Dogs vs Cats",
                 created_at=datetime.utcnow(),
                 description="This room is all about Dogs vs cats, no memes allowed.",
+                user_id=1,
             ),
             Chat_Rooms(
                 room_name="Pizza is on top",
                 created_at=datetime.utcnow(),
                 description="I believe that pizza is the best food, jump in the room if you disaggree.",
+                user_id=1,
             ),
             Chat_Rooms(
                 room_name="Ice Cream is better than cake",
                 created_at=datetime.utcnow(),
                 description="I love ice cream",
+                user_id=2,
             ),
             # Add more chat rooms if needed
         ]
