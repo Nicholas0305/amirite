@@ -1,4 +1,3 @@
-// Chat.js
 import React, { useState, useEffect } from "react";
 import ChatCard from "./ChatCard";
 import MessageInput from "./MessageInput";
@@ -37,7 +36,16 @@ function Chat({ room, user }) {
       // Clean up event listeners
       socket.disconnect();
     };
-  }, []); // Re-run effect when room changes
+  }, [room]); // Re-run effect when room changes
+
+  // Function to handle room change
+  const handleRoomChange = (newRoom) => {
+    // Clear the messages state
+    setMessages([]);
+
+    // Emit fetch_messages event for the new room
+    socket.emit("fetch_messages", { room_id: newRoom.room_id });
+  };
 
   return (
     <div id="chat-container">

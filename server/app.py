@@ -26,7 +26,7 @@ def handle_message(data):
     print(f"Received message '{message}' for room {room_id}")
 
     # Broadcast the message to sockets in the specified room
-    emit("message", message, room=room_id)
+    emit("message", message, room=room_id, broadcast=True)
 
 
 @socketio.on("fetch_messages")
@@ -46,13 +46,13 @@ def handle_fetch_messages(data):
 @socketio.on("new_message")
 def handle_new_message(data):
     # Extract message data from the received payload
-    message_content = data.get("message")
+    message = data.get("message")
     room_id = data.get("room_id")
     user_id = data.get("user_id")
 
     # Create a new message object
     new_message = Messages(
-        message=message_content,
+        message=message,
         room_id=room_id,
         user_id=user_id,
         # Add other fields as needed
@@ -62,8 +62,8 @@ def handle_new_message(data):
     db.session.add(new_message)
     db.session.commit()
 
-    # Broadcast the new message to all connected clients
-    emit("message_received", data, broadcast=True)
+    # Broadcast the new message to clients in the specified room
+    emit("message", message, room=room_id, broadcast=True)
 
 
 @app.route("/users", methods=["GET", "POST"])

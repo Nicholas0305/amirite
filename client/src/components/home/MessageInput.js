@@ -10,12 +10,12 @@ function MessageInput({ user, socket, room }) {
     e.preventDefault();
 
     // Send message to WebSocket server
-    socket.emit("message", {
+    socket.emit("new_message", {
       message,
       room_id: room.room_id,
       user_id: user.user_id,
     });
-
+    console.log(message);
     // Reset message input
     setMessage("");
   };
