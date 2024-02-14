@@ -37,7 +37,7 @@ function Chat({ room, user }) {
       // Clean up event listeners
       socket.disconnect();
     };
-  }, []); // Re-run effect when room changes
+  }, [room]); // Re-run effect when room changes
 
   // Function to handle room change
   const handleRoomChange = (newRoom) => {
