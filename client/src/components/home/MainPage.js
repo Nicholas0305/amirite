@@ -38,9 +38,10 @@ function MainPage() {
       clearTimeout(welcomeMessageTimer);
     };
   }, []);
+
   //Function that toggles a room if clicked on
   const toggleComponent = (room) => {
-    setSelectedRoom(room);
+    setSelectedRoom({ ...room });
     setShowComponent(true);
     console.log(room);
   };
@@ -83,7 +84,14 @@ function MainPage() {
         user={user}
         deleteRoom={deleteRoom}
       />
-      {showComponent && <Chat room={selectedRoom} user={user} url={url} />}
+      {showComponent && (
+        <Chat
+          key={selectedRoom.room_id}
+          room={selectedRoom}
+          user={user}
+          url={url}
+        />
+      )}
     </div>
   );
 }

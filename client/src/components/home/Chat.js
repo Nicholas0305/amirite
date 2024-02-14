@@ -9,7 +9,6 @@ function Chat({ room, user }) {
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
   const [edit, setEdit] = useState(false);
-
   useEffect(() => {
     // WebSocket event listeners
     socket.on("connect", () => {
@@ -30,24 +29,8 @@ function Chat({ room, user }) {
 
     socket.on("fetched_messages", (fetchedMessages) => {
       setMessages(fetchedMessages);
-      console.log(fetchedMessages);
     });
-
-    return () => {
-      // Clean up event listeners
-      socket.disconnect();
-    };
   }, [room]); // Re-run effect when room changes
-
-  // Function to handle room change
-  const handleRoomChange = (newRoom) => {
-    // Clear the messages state
-    setMessages([]);
-
-    // Emit fetch_messages event for the new room
-    socket.emit("fetch_messages", { room_id: newRoom.room_id });
-  };
-
   return (
     <div id="chat-container">
       <ul id="chat-list">
