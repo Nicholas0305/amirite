@@ -1,3 +1,5 @@
+// ChatRoomList.js
+// List component that renders each chat room card
 import React from "react";
 import ChatRoomCard from "./ChatRoomCard";
 

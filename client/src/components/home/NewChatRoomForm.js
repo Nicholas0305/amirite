@@ -1,14 +1,20 @@
+//NewChatRoomForm.js
+/*
+Form that renders when the + button is clicked on the main page. Allows the user to post a new chat room to the database
+Form utilizes Formik
+*/
 import React from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 import Draggable from "react-draggable";
 
 function NewChatRoomForm({ rooms, setRooms }) {
+  //Formik fields
   const formSchema = yup.object({
     room_name: yup.string().required("Please enter a room name."),
     description: yup.string().required("Please enter a description."),
   });
-
+  //Formik values
   const formik = useFormik({
     initialValues: {
       room_name: "",
@@ -30,7 +36,7 @@ function NewChatRoomForm({ rooms, setRooms }) {
           throw new Error("Network response was not ok.");
         })
         .then((data) => {
-          setRooms([...rooms, data]); // Assuming the response data is the new room object
+          setRooms([...rooms, data]);
         })
         .catch((error) => {
           console.error("There was a problem with the fetch operation:", error);
@@ -40,45 +46,41 @@ function NewChatRoomForm({ rooms, setRooms }) {
         });
     },
   });
-
+  //Input form for new Chat room
   return (
-    <Draggable>
-      <div id="newChatRoomForm">
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            formik.handleSubmit(e);
-          }}
-        >
-          <h2>New Chat Room</h2>
-          <div>
-            <input
-              id="chatRoomName"
-              name="room_name"
-              type="text"
-              onChange={formik.handleChange}
-              value={formik.values.room_name}
-              placeholder="Chat Room Name"
-            />
-            {formik.errors.room_name && <div>{formik.errors.room_name}</div>}
-          </div>
-          <div>
-            <input
-              id="description"
-              name="description"
-              type="text"
-              onChange={formik.handleChange}
-              value={formik.values.description}
-              placeholder="Description"
-            />
-            {formik.errors.description && (
-              <div>{formik.errors.description}</div>
-            )}
-          </div>
-          <button type="submit">Submit</button>
-        </form>
-      </div>
-    </Draggable>
+    <div id="newChatRoomForm">
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          formik.handleSubmit(e);
+        }}
+      >
+        <h2>New Chat Room</h2>
+        <div>
+          <input
+            id="chatRoomName"
+            name="room_name"
+            type="text"
+            onChange={formik.handleChange}
+            value={formik.values.room_name}
+            placeholder="Chat Room Name"
+          />
+          {formik.errors.room_name && <div>{formik.errors.room_name}</div>}
+        </div>
+        <div>
+          <input
+            id="description"
+            name="description"
+            type="text"
+            onChange={formik.handleChange}
+            value={formik.values.description}
+            placeholder="Description"
+          />
+          {formik.errors.description && <div>{formik.errors.description}</div>}
+        </div>
+        <button type="submit">Submit</button>
+      </form>
+    </div>
   );
 }
 

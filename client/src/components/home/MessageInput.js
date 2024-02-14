@@ -1,4 +1,6 @@
 // MessageInput.js
+/*Message Input component that allows users to send/post messages to chat rooms
+Form is structered using Formik */
 import React, { useState } from "react";
 
 function MessageInput({ url, room, messages, setMessages, user }) {
@@ -32,7 +34,7 @@ function MessageInput({ url, room, messages, setMessages, user }) {
           ? [...messages, data]
           : [data];
         setMessages(updatedMessages);
-        setMessage(""); // Reset message input
+        setMessage("");
       })
       .catch((error) => {
         console.error("Error sending message:", error);

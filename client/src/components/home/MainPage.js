@@ -1,3 +1,5 @@
+//MainPage.js
+//Main page component that houses all the sub components within the home directory
 import React, { useEffect, useState } from "react";
 import MainPageNav from "./MainPageNav";
 import ChatRoomList from "./ChatRoomList";
@@ -16,7 +18,7 @@ function MainPage() {
   const [showComponent, setShowComponent] = useState(false);
   const [chatForm, showChatForm] = useState(false);
   const [showWelcomeMessage, setShowWelcomeMessage] = useState(true);
-
+  //Fetches all chat rooms on component mount
   useEffect(() => {
     fetch(url + "/chat_rooms")
       .then((res) => res.json())
@@ -26,7 +28,7 @@ function MainPage() {
       })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
-
+  //Welcome message for the user, lasts 5 seconds
   useEffect(() => {
     const welcomeMessageTimer = setTimeout(() => {
       setShowWelcomeMessage(false);
@@ -36,24 +38,25 @@ function MainPage() {
       clearTimeout(welcomeMessageTimer);
     };
   }, []);
-
+  //Function that toggles a room if clicked on
   const toggleComponent = (room) => {
     setSelectedRoom(room);
     setShowComponent(true);
     console.log(room);
   };
-
+  //State that allows the chat rooms to be searched
   const filtered = rooms.filter((room) =>
     room.room_name.toUpperCase().includes(search.toUpperCase())
   );
-
+  //Search state
   const updateSearch = (e) => {
     setSearch(e.target.value);
   };
-
+  //Function that toggles new chat room form
   function handleFormClick() {
     showChatForm((prev) => !prev);
   }
+  //Function that allows for the deletion of a chat room
   function deleteRoom(id) {
     const room = filtered.filter((room) => room.room_id !== id);
     setRooms(room);

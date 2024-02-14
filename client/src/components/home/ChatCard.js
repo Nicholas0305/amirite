@@ -1,3 +1,4 @@
+//ChatCard.js
 import React, { useState, useEffect } from "react";
 
 function ChatCard({ message, user }) {
