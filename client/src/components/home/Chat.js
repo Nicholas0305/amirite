@@ -31,6 +31,15 @@ function Chat({ room, user }) {
       setMessages(fetchedMessages);
     });
   }, [messages]); // Re-run effect when room changes
+  useEffect(() => {
+    fetch(`${url}/users`)
+      .then((res) => res.json())
+      .then((users) => {
+        setUsers(users);
+      })
+      .catch((error) => console.error("Error fetching users:", error));
+  }, [room]);
+
   const getMessageUserName = (userId) => {
     const user = users.find((user) => user.user_id === userId);
     return user ? user.username : "Unknown User";
