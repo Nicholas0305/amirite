@@ -20,12 +20,11 @@ def handle_disconnect():
 
 @socketio.on("message")
 def handle_message(data):
-    room_id = data.get("room_id")  # Assuming room_id is provided in the message data
+    room_id = data.get("room_id")
     message = data.get("message")
 
     print(f"Received message '{message}' for room {room_id}")
 
-    # Broadcast the message to sockets in the specified room
     emit("message", message, broadcast=True)
 
 
@@ -33,36 +32,30 @@ def handle_message(data):
 def handle_fetch_messages(data):
     room_id = data.get("room_id")
 
-    # Query messages from the database for the specified room_id
     messages = Messages.query.filter_by(room_id=room_id).all()
 
-    # Convert messages to a list of dictionaries
     messages_dict = [message.to_dict() for message in messages]
 
-    # Emit the messages to the client that requested them
     emit("fetched_messages", messages_dict)
 
 
 @socketio.on("new_message")
 def handle_new_message(data):
-    # Extract message data from the received payload
+
     message = data.get("message")
     room_id = data.get("room_id")
     user_id = data.get("user_id")
 
-    # Create a new message object
     new_message = Messages(
         message=message,
         room_id=room_id,
         user_id=user_id,
-        # Add other fields as needed
     )
     print(f"Received message '{message}' for room {room_id}")
-    # Save the message to the database
+
     db.session.add(new_message)
     db.session.commit()
 
-    # Broadcast the new message to clients in the specified room
     emit("message", message, room_id=room_id, broadcast=True)
 
 
@@ -81,7 +74,6 @@ def users_all():
             likes=0,
             dislikes=0,
             created_at=current_time,
-            # Add other fields as needed
         )
 
         db.session.add(new_user)
@@ -100,23 +92,18 @@ def handle_fetch_chat_rooms():
 
 @socketio.on("new_chat_room")
 def handle_new_chat_room(new_room_data):
-    # Extract new room data from the received payload
+
     room_name = new_room_data.get("room_name")
     description = new_room_data.get("description")
-    # Add other necessary data fields
 
-    # Create a new chat room object
     new_room = Chat_Rooms(
         room_name=room_name,
         description=description,
-        # Add other fields as needed
     )
 
-    # Save the new chat room to the database
     db.session.add(new_room)
     db.session.commit()
 
-    # Broadcast the new chat room to all connected clients
     emit("new_chat_room_added", new_room.to_dict(), broadcast=True)
 
 

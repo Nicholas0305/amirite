@@ -83,25 +83,31 @@ if __name__ == "__main__":
         # Sample data for Messages
         messages = [
             Messages(
-                message="Hello, this is a test message!",
+                message="I really love Dogs!",
                 room_id=1,
                 user_id=1,
                 created_at=datetime.utcnow(),
             ),
             Messages(
-                message="Another test message.",
+                message="Wow buddy, you are unbelievable",
                 room_id=1,
-                user_id=1,
+                user_id=2,
                 created_at=datetime.utcnow(),
             ),
             Messages(
-                message="Yet another test message.",
+                message="According to leading Scientist, pizza boosts the immune system. Sources from wikipedia",
                 room_id=2,
                 user_id=2,
                 created_at=datetime.utcnow(),
             ),
             Messages(
-                message="Testing a message in Room 3.",
+                message="I concur my good gentleman",
+                room_id=2,
+                user_id=1,
+                created_at=datetime.utcnow(),
+            ),
+            Messages(
+                message="Ice cream low key better",
                 room_id=3,
                 user_id=2,
                 created_at=datetime.utcnow(),

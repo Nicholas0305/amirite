@@ -1,11 +1,15 @@
 //MainPageNav.js
 //Main page Navbar, houses all client side routes
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import UserSettingsForm from "./UserSettingsForm";
 function MainPageNav({ user }) {
   const navigate = useNavigate();
+  const [isOpen, setIsOpen] = useState(false);
 
+  const toggleForm = () => {
+    setIsOpen(!isOpen);
+  };
   const navigateToHome = () => {
     navigate("/MainPage", { state: { user } });
   };
@@ -29,7 +33,13 @@ function MainPageNav({ user }) {
       <p onClick={navigateToStats}>Statistics</p>
       <p onClick={navigateToLeaderboards}>Leaderboard</p>
       <p onClick={navigateToAbout}>About</p>
-      {user && <p id="userNav"> {user.username}</p>}
+      {user && (
+        <p id="userNav" onClick={toggleForm}>
+          {" "}
+          {user.username}
+        </p>
+      )}
+      <UserSettingsForm isOpen={isOpen} user={user} />
       <p onClick={navigateToLogin}>Logout</p>
     </nav>
   );

@@ -68,7 +68,11 @@ function MainPage() {
       <MainPageNav user={user} />
       <div id="search-container">
         <SearchBar search={search} updateSearch={updateSearch} />
-        <button onClick={handleFormClick} id="toggleFormButton">
+        <button
+          onClick={handleFormClick}
+          className="button-circle"
+          id="toggleFormButton"
+        >
           +
         </button>
       </div>
@@ -78,6 +82,9 @@ function MainPage() {
           <p className="welcomeMessage">Welcome {user.username}</p>
         </div>
       )}
+      <div id="public-chat-rooms-message-container">
+        <h1>Public Chat Rooms</h1>
+      </div>
       <ChatRoomList
         toggleComponent={toggleComponent}
         rooms={filtered}

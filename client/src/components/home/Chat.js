@@ -32,7 +32,7 @@ function Chat({ room, user }) {
     });
   }, [messages]); // Re-run effect when room changes
   useEffect(() => {
-    fetch(`${url}/users`)
+    fetch("http://127.0.0.1:5555/users")
       .then((res) => res.json())
       .then((users) => {
         setUsers(users);
@@ -53,7 +53,7 @@ function Chat({ room, user }) {
         {messages.length > 0 &&
           messages.map((message, index) => (
             <div key={index}>
-              <p id="username">{message.username}</p>
+              <p id="username">{getMessageUserName(message.user_id)}</p>
               <ChatCard
                 key={message.message_id} // This key might not be needed inside ChatCard
                 message={message}
@@ -72,6 +72,13 @@ function Chat({ room, user }) {
           setMessages={setMessages}
         />
       </ul>
+      {/* <MessageInput
+        user={user}
+        socket={socket}
+        room={room}
+        messages={messages}
+        setMessages={setMessages}
+      /> */}
     </div>
   );
 }

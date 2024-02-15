@@ -5,18 +5,17 @@ function ChatCard({ message, user }) {
   const url = "http://127.0.0.1:5555";
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
-  const [userLikes, setUserLikes] = useState(user.likes); // Initialize to 0 if user.likes is undefined
-  const [userDislikes, setUserDislikes] = useState(user.dislikes); // Initialize to 0 if user.dislikes is undefined
+  const [userLikes, setUserLikes] = useState(user.likes);
+  const [userDislikes, setUserDislikes] = useState(user.dislikes);
 
   useEffect(() => {
     setUserLikes(user.likes);
 
     setUserDislikes(user.dislikes);
-  }, []); // Only re-run the effect if user object changes
+  }, []);
   function handleLikes() {
     setUserLikes((prev) => prev + 1);
     updateLikes(userLikes);
-    console.log(userLikes);
   }
   function handleDislikes() {
     setUserDislikes((prev) => prev + 1);
@@ -32,7 +31,7 @@ function ChatCard({ message, user }) {
     })
       .then((response) => response.json())
       .then((data) => {
-        setLiked(true); // Optionally, update liked state if needed
+        setLiked(true);
       })
       .catch((error) => console.error("Error:", error));
   }
@@ -57,8 +56,12 @@ function ChatCard({ message, user }) {
       <p>{message.message}</p>
       {/* {!liked && !disliked && ( */}
       <>
-        <button onClick={handleLikes}>Like</button>
-        <button onClick={handleDislikes}>Dislike</button>
+        <button className="like-button" onClick={handleLikes}>
+          Like
+        </button>
+        <button className="dislike-button" onClick={handleDislikes}>
+          Dislike
+        </button>
       </>
       {/* // )} */}
     </li>

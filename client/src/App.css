@@ -130,14 +130,19 @@ textarea {
   border-radius: 8px;
   width: 200px;
   height: 300px;
-  transition: box-shadow 0.3s;
   margin-bottom: 20px;
   margin-left: 5px;
   margin-right: 5px;
+  margin-top: 15px;
   padding: 10px;
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Added box-shadow to the transition */
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5); /* Added box shadow */
 }
+
 .card:hover {
   cursor: pointer;
+  transform: scale(1.05);
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5); /* Change box shadow on hover */
 }
 
 #search-container {
@@ -259,7 +264,7 @@ textarea {
 #newChatRoomForm button:hover {
   background-color: #007bb6;
 }
-#toggleFormButton {
+/* #toggleFormButton {
   padding: 10px 20px;
   background-color: dodgerblue;
   color: white;
@@ -267,7 +272,7 @@ textarea {
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
-}
+} */
 #loginForm-container {
   display: flex;
 
@@ -448,7 +453,7 @@ textarea {
   padding: 20px;
   background-color: #f7f7f7;
   border-radius: 10px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Horizontal, Vertical, Blur, Spread, Color */
+  box-shadow: 0 5px 4px rgba(0, 0, 0, 0.1); /* Horizontal, Vertical, Blur, Spread, Color */
 }
 
 .about-card h1 {
@@ -506,10 +511,10 @@ textarea {
 }
 
 #join-room-button:hover {
-  background-color: #388e3c; /* Darker Green */
+  background-color: #388e3c;
 }
 .edit-button {
-  background-color: #4caf50; /* Green */
+  background-color: #4caf50;
   border: none;
   color: white;
   padding: 5px 5px;
@@ -523,5 +528,90 @@ textarea {
 }
 
 .edit-button:hover {
-  background-color: #45a049; /* Darker Green */
+  background-color: #45a049;
+}
+#public-chat-rooms-message-container {
+  display: flex;
+  justify-content: center;
+}
+#search-container .button-circle {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-color: dodgerblue;
+  color: white;
+  border: none;
+  transition: width 0.5s, height 0.5s;
+  cursor: pointer;
+}
+
+#search-container .button-circle:hover {
+  width: 60px;
+  height: 60px;
+  border-radius: 1;
+}
+.form-container {
+  position: fixed;
+  top: -100%;
+  right: 10px; /* Adjust this value as needed */
+  width: 10%;
+  height: 10%;
+  background-color: white;
+  transition: top 0.5s ease; /* Smooth transition for sliding effect */
+  z-index: -1; /* Ensure the form is on top of other elements */
+  color: black;
+  margin-top: 80px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  padding: 5px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add unit and adjust shadow values as needed */
+}
+.form p {
+  margin-top: 5px;
+}
+
+.open {
+  top: 0; /* Slide the form down to the top of the page */
+}
+.form p::after {
+  content: "";
+  position: absolute;
+  bottom: -2px; /* Adjust as needed */
+  left: 0;
+  width: 60%;
+  height: 2px; /* Adjust as needed */
+  background-color: transparent;
+  transition: background-color 0.3s ease; /* Smooth transition effect */
+}
+
+.form p:hover::after {
+  background-color: dodgerblue; /* Change the color to your desired underline color */
+}
+.like-button,
+.dislike-button {
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.like-button:hover,
+.dislike-button:hover {
+  background-color: #ddd;
+}
+
+.like-button {
+  background-color: #4caf50;
+  color: white;
+}
+
+.dislike-button {
+  background-color: #f44336;
+  color: white;
 }
