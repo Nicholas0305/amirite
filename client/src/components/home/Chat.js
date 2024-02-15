@@ -31,6 +31,10 @@ function Chat({ room, user }) {
       setMessages(fetchedMessages);
     });
   }, [messages]); // Re-run effect when room changes
+  const getMessageUserName = (userId) => {
+    const user = users.find((user) => user.user_id === userId);
+    return user ? user.username : "Unknown User";
+  };
   return (
     <div id="chat-container">
       <ul id="chat-list">
