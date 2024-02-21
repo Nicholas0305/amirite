@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import MainPageNav from "./MainPageNav";
+import UserRoomsList from "./UserRoomsList";
 import ChatRoomList from "./ChatRoomList";
 import SearchBar from "./SearchBar";
 import Chat from "./Chat";
@@ -98,9 +99,19 @@ function MainPage() {
           <p className="welcomeMessage">Welcome {user.username}</p>
         </div>
       )}
+      <div id="my-chat-rooms-message-container">
+        <h1>My Rooms</h1>
+      </div>
+      <UserRoomsList
+        toggleComponent={toggleComponent}
+        rooms={filtered}
+        user={user}
+        deleteRoom={deleteRoom}
+      />
       <div id="public-chat-rooms-message-container">
         <h1>Public Chat Rooms</h1>
       </div>
+
       <ChatRoomList
         toggleComponent={toggleComponent}
         rooms={filtered}

@@ -114,6 +114,16 @@ textarea {
   padding: 0;
   margin-top: 0;
 }
+#user-rooms-list {
+  display: flex;
+  justify-content: center;
+  margin-left: 0;
+  list-style: none;
+  padding: 0;
+  flex-wrap: wrap;
+  height: 350px;
+  overflow-y: auto;
+}
 #chatroomlist {
   display: flex;
   justify-content: center;
@@ -539,6 +549,10 @@ textarea {
 
 .edit-button:hover {
   background-color: #45a049;
+}
+#my-chat-rooms-message-container {
+  display: flex;
+  justify-content: center;
 }
 #public-chat-rooms-message-container {
   display: flex;

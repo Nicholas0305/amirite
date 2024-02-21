@@ -5,7 +5,6 @@ function UserSettingsForm({ isOpen, user }) {
     <section className={`form-container ${isOpen ? "open" : ""}`}>
       <div className="form">
         <p>{user && user.username}</p>
-
         <p>Settings</p>
       </div>
     </section>
