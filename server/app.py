@@ -8,16 +8,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 
-# @socketio.on("message")
-# def handle_message(data):
-#     room_id = data.get("room_id")
-#     message = data.get("message")
-
-#     print(f"Received message '{message}' for room {room_id}")
-
-#     emit("new_message", message, broadcast=True)
-
-
 @socketio.on("fetch_messages")
 def handle_fetch_messages(data):
     room_id = data.get("room_id")
@@ -77,23 +67,6 @@ def handle_fetch_chat_rooms():
     chat_rooms = Chat_Rooms.query.all()
     chat_rooms_dict = [chat_room.to_dict() for chat_room in chat_rooms]
     emit("fetched_chat_rooms", chat_rooms_dict)
-
-
-@socketio.on("new_chat_room")
-def handle_new_chat_room(new_room_data):
-
-    room_name = new_room_data.get("room_name")
-    description = new_room_data.get("description")
-
-    new_room = Chat_Rooms(
-        room_name=room_name,
-        description=description,
-    )
-
-    db.session.add(new_room)
-    db.session.commit()
-
-    emit("new_chat_room_added", new_room.to_dict(), broadcast=True)
 
 
 @app.route("/login", methods=["POST"])
