@@ -63,9 +63,8 @@ function NewChatRoomForm({ rooms, setRooms, user }) {
         })
         .then((data) => {
           setRooms([...rooms, data]);
-          console.log(data);
+
           addParticipant(data.room_id, data.user_id);
-          console.log(data.room_id);
         })
         .catch((error) => {
           console.error("There was a problem with the fetch operation:", error);

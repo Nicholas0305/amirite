@@ -8,24 +8,14 @@ from werkzeug.security import generate_password_hash, check_password_hash
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 
-@socketio.on("connect")
-def handle_connect():
-    print("Client connected")
+# @socketio.on("message")
+# def handle_message(data):
+#     room_id = data.get("room_id")
+#     message = data.get("message")
 
+#     print(f"Received message '{message}' for room {room_id}")
 
-@socketio.on("disconnect")
-def handle_disconnect():
-    print("Client disconnected")
-
-
-@socketio.on("message")
-def handle_message(data):
-    room_id = data.get("room_id")
-    message = data.get("message")
-
-    print(f"Received message '{message}' for room {room_id}")
-
-    emit("message", message, broadcast=True)
+#     emit("new_message", message, broadcast=True)
 
 
 @socketio.on("fetch_messages")
@@ -41,7 +31,6 @@ def handle_fetch_messages(data):
 
 @socketio.on("new_message")
 def handle_new_message(data):
-
     message = data.get("message")
     room_id = data.get("room_id")
     user_id = data.get("user_id")
@@ -51,12 +40,12 @@ def handle_new_message(data):
         room_id=room_id,
         user_id=user_id,
     )
-    print(f"Received message '{message}' for room {room_id}")
 
     db.session.add(new_message)
     db.session.commit()
-
-    emit("message", message, room_id=room_id, broadcast=True)
+    print(new_message.to_dict())
+    # Emit the new message to all clients in the specified room
+    emit("message", new_message.to_dict(), broadcast=True)
 
 
 @app.route("/users", methods=["GET", "POST"])

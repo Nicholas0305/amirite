@@ -14,7 +14,7 @@ function BarChart({ chartData }) {
           },
         },
       }}
-      style={{ height: "10vh", width: "10vh" }} // Adjust the values accordingly
+      style={{ height: "40vh", width: "70vw" }} // Adjust the values accordingly
     />
   );
 }

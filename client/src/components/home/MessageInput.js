@@ -17,7 +17,7 @@ function MessageInput({ user, socket, room, messages, setMessages }) {
     socket.emit("new_message", newMessage);
 
     // Update messages state with the new message
-    setMessages([...messages, newMessage]);
+    // setMessages([...messages, newMessage]);
 
     // Reset the message input field
     setMessage("");

@@ -20,7 +20,9 @@ function StatsPage() {
   return (
     <div>
       <StatsNav user={user} />
-      <StatsCard user={user} />
+      <div id="stats-card-container">
+        <StatsCard user={user} />
+      </div>
     </div>
   );
 }
