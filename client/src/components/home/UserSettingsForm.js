@@ -4,7 +4,7 @@ function UserSettingsForm({ isOpen, user }) {
   return (
     <section className={`form-container ${isOpen ? "open" : ""}`}>
       <div className="form">
-        <p>{user.username}</p>
+        <p>{user && user.username}</p>
 
         <p>Settings</p>
       </div>

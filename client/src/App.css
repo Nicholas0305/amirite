@@ -52,7 +52,7 @@ textarea {
 .navbar {
   background-color: rgb(39, 39, 39);
   color: white;
-  padding: 15px 10px;
+  padding: 10px 10px;
   border-bottom: 1px solid grey;
   position: relative;
   width: 99vw;
@@ -173,11 +173,12 @@ textarea {
 }
 
 #chat-list li {
-  background-color: #dcf8c6;
+  background-color: dodgerblue;
   padding: 5px 10px;
   border-radius: 10px;
   margin: 5px 0;
   max-width: 70%;
+  color: white;
 }
 #chat-list h1 {
   font-size: 18px;
@@ -327,6 +328,10 @@ textarea {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   padding: 20px;
   margin-bottom: 20px;
+  margin-top: 30px;
+  position: relative;
+  z-index: -1;
+  max-width: 70vw;
 }
 
 .stats-card p {
@@ -551,8 +556,8 @@ textarea {
   border-radius: 1;
 }
 .form-container {
-  position: fixed;
-  top: -100%;
+  position: absolute;
+  top: -200%;
   right: 10px; /* Adjust this value as needed */
   width: 10%;
   height: 10%;
@@ -594,7 +599,7 @@ textarea {
 }
 .like-button,
 .dislike-button {
-  padding: 5px 10px;
+  padding: 5px 5px;
   border: none;
   border-radius: 5px;
   cursor: pointer;

@@ -6,9 +6,34 @@ Form utilizes Formik
 import React from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import Draggable from "react-draggable";
 
-function NewChatRoomForm({ rooms, setRooms }) {
+function NewChatRoomForm({ rooms, setRooms, user }) {
+  function addParticipant(currentRoom, currentUser) {
+    fetch("http://127.0.0.1:5555/room_participants", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        // Add any other headers if needed
+      },
+      body: JSON.stringify({
+        room_id: currentRoom,
+        user_id: currentUser,
+        // Add any other data you need to send in the request body
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to add participant");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        console.log("Participant added successfully:", data);
+      })
+      .catch((error) => {
+        console.error("Error adding participant:", error);
+      });
+  }
   //Formik fields
   const formSchema = yup.object({
     room_name: yup.string().required("Please enter a room name."),
@@ -19,6 +44,7 @@ function NewChatRoomForm({ rooms, setRooms }) {
     initialValues: {
       room_name: "",
       description: "",
+      user_id: user.user_id,
     },
     validationSchema: formSchema,
     onSubmit: (values, { setSubmitting }) => {
@@ -37,6 +63,9 @@ function NewChatRoomForm({ rooms, setRooms }) {
         })
         .then((data) => {
           setRooms([...rooms, data]);
+          console.log(data);
+          addParticipant(data.room_id, data.user_id);
+          console.log(data.room_id);
         })
         .catch((error) => {
           console.error("There was a problem with the fetch operation:", error);

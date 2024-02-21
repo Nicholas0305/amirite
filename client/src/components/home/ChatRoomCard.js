@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-function ChatRoomCard({ room, toggleComponent, user, deleteRoom }) {
+function ChatRoomCard({ room, toggleComponent, user, deleteRoom, rooms }) {
   const url = "http://127.0.0.1:5555";
   const [isUserOwner, setIsUserOwner] = useState(false); // State for checking if user is the owner of the room
   const [isUserParticipant, setIsUserParticipant] = useState(false);
@@ -9,14 +9,19 @@ function ChatRoomCard({ room, toggleComponent, user, deleteRoom }) {
   useEffect(() => {
     checkUserParticipant();
     checkUserOwner();
+    console.log("hi");
   }, []);
 
   // Function that checks if the user is a participant of the room
   function checkUserParticipant() {
-    const userIsParticipant = room.participants.some(
-      (participant) => participant.user_id === user.user_id
-    );
-    setIsUserParticipant(userIsParticipant);
+    if (user && user.user_id && room && room.participants) {
+      const userIsParticipant = room.participants.some(
+        (participant) => participant.user_id === user.user_id
+      );
+      setIsUserParticipant(userIsParticipant);
+    } else {
+      setIsUserParticipant(false);
+    }
   }
 
   // Function that checks if the user is the owner of the room

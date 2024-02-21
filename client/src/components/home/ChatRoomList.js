@@ -14,6 +14,7 @@ function ChatRoomList({ rooms, toggleComponent, user, deleteRoom }) {
             toggleComponent={toggleComponent}
             user={user}
             deleteRoom={deleteRoom}
+            rooms={rooms}
           />
         );
       })}

@@ -1,6 +1,6 @@
 //ChatCard.js
 import React, { useState, useEffect } from "react";
-
+import { ThumbsUp, ThumbsDown } from "react-feather";
 function ChatCard({ message, user }) {
   const url = "http://127.0.0.1:5555";
   const [liked, setLiked] = useState(false);
@@ -56,12 +56,14 @@ function ChatCard({ message, user }) {
       <p>{message.message}</p>
       {/* {!liked && !disliked && ( */}
       <>
-        <button className="like-button" onClick={handleLikes}>
-          Like
-        </button>
-        <button className="dislike-button" onClick={handleDislikes}>
-          Dislike
-        </button>
+        <div>
+          <button className={"like-button"} onClick={handleLikes}>
+            <ThumbsUp />
+          </button>
+          <button className="dislike-button" onClick={handleDislikes}>
+            <ThumbsDown />
+          </button>
+        </div>
       </>
       {/* // )} */}
     </li>

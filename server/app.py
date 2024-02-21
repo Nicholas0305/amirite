@@ -132,6 +132,7 @@ def chat_rooms():
         new_chat_room = Chat_Rooms(
             room_name=form_data["room_name"],
             description=form_data["description"],
+            user_id=form_data["user_id"],
             created_at=current_time,
             # Add other fields as needed
         )
@@ -222,7 +223,7 @@ def users_by_id(id):
             db.session.commit()
 
             response = make_response(user.to_dict(), 201)
-            return response
+        return response
 
 
 @app.route("/room_participants", methods=["GET", "POST"])
