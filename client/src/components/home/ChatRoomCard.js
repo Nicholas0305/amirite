@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
+import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
+import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
 function ChatRoomCard({ room, toggleComponent, user, deleteRoom, rooms }) {
   const url = "http://127.0.0.1:5555";
   const [isUserOwner, setIsUserOwner] = useState(false); // State for checking if user is the owner of the room
@@ -85,16 +88,26 @@ function ChatRoomCard({ room, toggleComponent, user, deleteRoom, rooms }) {
         <span>
           {isUserOwner && (
             <span>
-              <button onClick={handleDelete} id="delete-room-button">
-                Delete
-              </button>
-              <button className="edit-button">Edit Room</button>
+              <FontAwesomeIcon
+                title="Delete Room"
+                id="delete-room-button"
+                onClick={handleDelete}
+                icon={faTrashAlt}
+              />
+              <FontAwesomeIcon
+                title="Edit Room"
+                className="edit-button"
+                icon={faEdit}
+              />
             </span>
           )}
           {!isUserOwner && !isUserParticipant && (
-            <button onClick={addParticipant} id="join-room-button">
-              Join room
-            </button>
+            <FontAwesomeIcon
+              title="Join Room"
+              onClick={addParticipant}
+              id="join-room-button"
+              icon={faUserPlus}
+            />
           )}
         </span>
       </li>
