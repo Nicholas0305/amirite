@@ -6,7 +6,9 @@ import SearchBar from "./SearchBar";
 import Chat from "./Chat";
 import NewChatRoomForm from "./NewChatRoomForm";
 import { useLocation } from "react-router-dom";
-
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faGlobe } from "@fortawesome/free-solid-svg-icons";
+import { faLock } from "@fortawesome/free-solid-svg-icons";
 function MainPage() {
   const url = "http://127.0.0.1:5555";
   const location = useLocation();
@@ -99,25 +101,40 @@ function MainPage() {
           <p className="welcomeMessage">Welcome {user.username}</p>
         </div>
       )}
-      <div id="my-chat-rooms-message-container">
-        <h1>My Rooms</h1>
+      <div id="both-lists-container">
+        <div id="my-chat-rooms-message-container">
+          <h1>
+            My Rooms{" "}
+            <FontAwesomeIcon style={{ color: "dodgerblue" }} icon={faLock} />
+          </h1>
+        </div>
+        <div id="user-rooms-list-container">
+          <UserRoomsList
+            toggleComponent={toggleComponent}
+            rooms={filtered}
+            user={user}
+            deleteRoom={deleteRoom}
+          />
+        </div>
+        <div id="public-chat-rooms-message-container">
+          <h1>
+            Public Chat Rooms{" "}
+            <FontAwesomeIcon
+              style={{ color: "dodgerblue" }}
+              className="fa-globe"
+              icon={faGlobe}
+            />
+          </h1>
+        </div>
+        <div id="public-rooms-list-container">
+          <ChatRoomList
+            toggleComponent={toggleComponent}
+            rooms={filtered}
+            user={user}
+            deleteRoom={deleteRoom}
+          />
+        </div>
       </div>
-      <UserRoomsList
-        toggleComponent={toggleComponent}
-        rooms={filtered}
-        user={user}
-        deleteRoom={deleteRoom}
-      />
-      <div id="public-chat-rooms-message-container">
-        <h1>Public Chat Rooms</h1>
-      </div>
-
-      <ChatRoomList
-        toggleComponent={toggleComponent}
-        rooms={filtered}
-        user={user}
-        deleteRoom={deleteRoom}
-      />
       {showComponent && (
         <Chat
           key={selectedRoom.room_id}

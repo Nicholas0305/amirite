@@ -1,7 +1,7 @@
 body {
   background-color: #333333;
 }
-* {
+p {
   color: white;
 }
 #mainPage-container {
@@ -58,7 +58,7 @@ textarea {
 .navbar {
   background-color: rgb(39, 39, 39);
   color: white;
-  padding: 10px 10px;
+  padding: 10px;
   border-bottom: 2px solid black;
   position: relative;
   width: 99vw;
@@ -68,17 +68,22 @@ textarea {
 }
 
 .navbar h1 {
-  margin: 0; /* Remove default margin */
+  margin-right: 10px; /* Remove default margin */
   cursor: pointer;
 }
 
-.navbar h1:hover {
-  color: lightblue;
+#fa-comment:hover {
+  color: dodgerblue;
 }
+
+.navbar h1:hover {
+  color: dodgerblue;
+}
+
 .navbar p {
   position: relative;
   display: inline-block;
-  margin-left: 10px;
+  margin-right: 10px; /* Remove default margin */
   cursor: pointer;
 }
 
@@ -97,8 +102,30 @@ textarea {
   background-color: dodgerblue; /* Change the color to your desired underline color */
 }
 
-#userNav {
-  margin-left: auto; /* Push userNav to the right */
+#user-container {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+#user-icon {
+  height: 35px;
+  margin-right: 5px;
+}
+
+/* New CSS */
+#navbar-left-container {
+  display: flex;
+  align-items: center;
+}
+
+#navbar-right-container {
+  display: flex;
+  align-items: center;
+}
+#navbar-right-container p {
+  display: flex;
+  align-items: center;
+  margin-right: 10px;
 }
 
 #sidebar {
@@ -120,6 +147,7 @@ textarea {
   padding: 0;
   margin-top: 0;
 }
+
 #user-rooms-list {
   display: flex;
   justify-content: center;
@@ -127,8 +155,19 @@ textarea {
   list-style: none;
   padding: 0;
   flex-wrap: wrap;
-  height: 350px;
+  height: 685px;
+
   overflow-y: auto;
+}
+#user-rooms-list-container {
+  display: flex;
+  justify-content: left;
+  width: fit-content;
+}
+#public-rooms-list-container {
+  display: flex;
+  justify-content: right;
+  width: fit-content;
 }
 #chatroomlist {
   display: flex;
@@ -141,12 +180,13 @@ textarea {
   overflow-y: auto;
 }
 .card {
+  color: white;
   background-color: black;
   border: 1px solid grey;
   border-radius: 8px;
   width: 200px;
   height: 300px;
-  margin-bottom: 20px;
+  /* margin-bottom: 20px; */
   margin-left: 5px;
   margin-right: 5px;
   margin-top: 15px;
@@ -505,7 +545,7 @@ textarea {
   margin-bottom: 8px;
 }
 #delete-room-button {
-  color: #d32f2f;
+  color: white;
   border: none;
   padding: 5px 5px;
   text-align: center;
@@ -542,7 +582,7 @@ textarea {
 }
 .edit-button {
   border: none;
-  color: #4caf50;
+  color: white;
   padding: 5px 5px;
   text-align: center;
   text-decoration: none;
@@ -554,15 +594,17 @@ textarea {
 }
 
 .edit-button:hover {
-  background-color: #45a049;
+  background-color: #5ee662;
 }
 #my-chat-rooms-message-container {
   display: flex;
   justify-content: center;
+  color: white;
 }
 #public-chat-rooms-message-container {
   display: flex;
   justify-content: center;
+  color: white;
 }
 #search-container .button-circle {
   width: 50px;
