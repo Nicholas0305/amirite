@@ -3,7 +3,7 @@
 import React from "react";
 import ChatRoomCard from "./ChatRoomCard";
 
-function ChatRoomList({ rooms, handlSelectRoom, user, deleteRoom }) {
+function ChatRoomList({ rooms, handleSelectRoom, user, deleteRoom }) {
   return (
     <ul id="public-rooms-list">
       {rooms.map((room) => {
@@ -11,7 +11,7 @@ function ChatRoomList({ rooms, handlSelectRoom, user, deleteRoom }) {
           <ChatRoomCard
             key={room.room_id}
             room={room}
-            handlSelectRoom={handlSelectRoom}
+            handleSelectRoom={handleSelectRoom}
             user={user}
             deleteRoom={deleteRoom}
             rooms={rooms}
