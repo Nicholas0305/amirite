@@ -5,19 +5,21 @@ import Audio from "./components/Audio";
 import Stats from "./components/stats/StatsPage";
 import RegisterPage from "./components/register/RegisterPage";
 import LeaderboardsPage from "./components/leaderboards/LeaderboardsPage";
-import AboutPage from "./updates/UpdatePage";
+import UpdatePage from "./updates/UpdatePage";
+import WelcomePage from "./components/welcome/WelcomePage";
 
 const routes = [
   {
     path: "/",
     element: <App />,
     children: [
-      { path: "/", element: <LoginPage /> },
+      { path: "/", element: <WelcomePage /> },
+      { path: "/Login", element: <LoginPage /> },
       { path: "/Register", element: <RegisterPage /> },
       { path: "/MainPage", element: <MainPage /> },
       { path: "/Stats", element: <Stats /> },
       { path: "/Leaderboards", element: <LeaderboardsPage /> },
-      { path: "/About", element: <AboutPage /> },
+      { path: "/about", element: <UpdatePage /> },
     ],
   },
 ];
