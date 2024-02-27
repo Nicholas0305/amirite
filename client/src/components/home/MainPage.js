@@ -3,15 +3,16 @@ import MainPageNav from "./MainPageNav";
 import UserRoomsList from "./UserRoomsList";
 import ChatRoomList from "./ChatRoomList";
 import SearchBar from "./SearchBar";
-import Chat from "./Chat";
+
 import NewChatRoomForm from "./NewChatRoomForm";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGlobe } from "@fortawesome/free-solid-svg-icons";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
 function MainPage() {
   const url = "http://127.0.0.1:5555";
   const location = useLocation();
+  const navigate = useNavigate();
   const [user, setUser] = useState(location.state?.user); // Initialize user state as null
   const [rooms, setRooms] = useState([]);
   const [selectedRoom, setSelectedRoom] = useState();
@@ -53,10 +54,11 @@ function MainPage() {
   }, []);
 
   // Function that toggles a room if clicked on
-  const toggleComponent = (room) => {
+  const handleSelectRoom = (room) => {
     setSelectedRoom({ ...room });
     setShowComponent(true);
-    console.log(room);
+    navigate("/Room", { state: { room, user } });
+    console.log(selectedRoom);
   };
 
   // State that allows the chat rooms to be searched
@@ -115,7 +117,7 @@ function MainPage() {
             </h1>
           </div>
           <UserRoomsList
-            toggleComponent={toggleComponent}
+            handleSelectRoom={handleSelectRoom}
             rooms={filtered}
             user={user}
             deleteRoom={deleteRoom}
@@ -134,21 +136,13 @@ function MainPage() {
             </h1>
           </div>
           <ChatRoomList
-            toggleComponent={toggleComponent}
+            handleSelectRoom={handleSelectRoom}
             rooms={filtered}
             user={user}
             deleteRoom={deleteRoom}
           />
         </div>
       </div>
-      {showComponent && (
-        <Chat
-          key={selectedRoom.room_id}
-          room={selectedRoom}
-          user={user}
-          url={url}
-        />
-      )}
     </div>
   );
 }

@@ -7,16 +7,26 @@ function LoginNav() {
   const navigateToWelcome = () => {
     navigate("/");
   };
+  const navigateToLogin = () => {
+    navigate("/Login");
+  };
+  const navigateToRegister = () => {
+    navigate("/Register");
+  };
   return (
     <nav className="navbar">
-      <h1 onClick={navigateToWelcome}>
-        Amirite{" "}
-        <FontAwesomeIcon
-          style={{ color: "dodgerblue" }}
-          id="fa-comment"
-          icon={faComment}
-        />
-      </h1>
+      <div id="navbar-left-container">
+        <h1 onClick={navigateToWelcome}>
+          Amirite{" "}
+          <FontAwesomeIcon
+            style={{ color: "dodgerblue" }}
+            id="fa-comment"
+            icon={faComment}
+          />
+        </h1>
+        <p onClick={navigateToLogin}>Login</p>
+        <p onClick={navigateToRegister}>Register</p>
+      </div>
     </nav>
   );
 }

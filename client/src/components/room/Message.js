@@ -1,7 +1,7 @@
 //ChatCard.js
 import React, { useState, useEffect } from "react";
 import { ThumbsUp, ThumbsDown } from "react-feather";
-function ChatCard({ message, user }) {
+function Message({ message, user }) {
   const url = "http://127.0.0.1:5555";
   const [liked, setLiked] = useState(false);
   const [disliked, setDisliked] = useState(false);
@@ -70,4 +70,4 @@ function ChatCard({ message, user }) {
   );
 }
 
-export default ChatCard;
+export default Message;

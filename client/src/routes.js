@@ -7,6 +7,7 @@ import RegisterPage from "./components/register/RegisterPage";
 import LeaderboardsPage from "./components/leaderboards/LeaderboardsPage";
 import UpdatePage from "./updates/UpdatePage";
 import WelcomePage from "./components/welcome/WelcomePage";
+import Room from "./components/room/Room";
 
 const routes = [
   {
@@ -17,6 +18,7 @@ const routes = [
       { path: "/Login", element: <LoginPage /> },
       { path: "/Register", element: <RegisterPage /> },
       { path: "/MainPage", element: <MainPage /> },
+      { path: "/Room", element: <Room /> },
       { path: "/Stats", element: <Stats /> },
       { path: "/Leaderboards", element: <LeaderboardsPage /> },
       { path: "/about", element: <UpdatePage /> },

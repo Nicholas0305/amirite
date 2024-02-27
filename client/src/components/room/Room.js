@@ -1,20 +1,26 @@
 import React, { useState, useEffect } from "react";
-import ChatCard from "./ChatCard";
+import Message from "./Message";
 import MessageInput from "./MessageInput";
 import io from "socket.io-client";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const socket = io("http://127.0.0.1:5555"); // Replace with your Flask server URL
 
-function Chat({ room, user }) {
+function Room() {
+  const location = useLocation();
+  const navigate = useNavigate();
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
   const [edit, setEdit] = useState(false);
 
+  const [user, setUser] = useState(location.state?.user); // Initialize user state as null
+  const [room, setRoom] = useState(location.state?.room);
+  console.log(location.state);
   useEffect(() => {
     // Set up WebSocket event listeners
-
+    console.log(room);
     socket.on("message", (new_message) => {
-      if (new_message.room_id == room.room_id) {
+      if (room && new_message.room_id === room.room_id) {
         setMessages((prevMessages) => [...prevMessages, new_message]);
       }
     });
@@ -50,24 +56,26 @@ function Chat({ room, user }) {
     return user ? user.username : "Unknown User";
   };
   const addMessage = (message) => {
-    socket.emit("new_message", {
-      message,
-      room_id: room.room_id,
-      user_id: user.user_id,
-    });
+    if (room) {
+      socket.emit("new_message", {
+        message,
+        room_id: room.room_id,
+        user_id: user.user_id,
+      });
+    }
   };
 
   return (
     <div id="chat-container">
       <ul id="chat-list">
         <div id="chatRoomName">
-          <h1>Chat Room: {room.room_name}</h1>
+          <h1>Chat Room: {room && room.room_name}</h1>
         </div>
         {messages.length > 0 &&
           messages.map((message, index) => (
             <div key={index}>
               <p id="username">{getMessageUserName(message.user_id)}</p>
-              <ChatCard
+              <Message
                 key={message.message_id} // This key might not be needed inside ChatCard
                 message={message}
                 user={user}
@@ -89,4 +97,4 @@ function Chat({ room, user }) {
   );
 }
 
-export default Chat;
+export default Room;

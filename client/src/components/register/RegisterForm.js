@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate from react
 function RegisterForm() {
   const navigate = useNavigate(); // Use useNavigate hook to get the navigate function
   function navigateToLogin() {
-    navigate("/");
+    navigate("/Login");
   }
   const formSchema = yup.object({
     username: yup.string().required("Please enter username"),

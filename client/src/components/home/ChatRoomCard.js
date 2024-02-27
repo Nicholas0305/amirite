@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEdit } from "@fortawesome/free-solid-svg-icons";
 import { faUserPlus } from "@fortawesome/free-solid-svg-icons";
 import { faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-function ChatRoomCard({ room, toggleComponent, user, deleteRoom, rooms }) {
+function ChatRoomCard({ room, handleSelectRoom, user, deleteRoom, rooms }) {
   const url = "http://127.0.0.1:5555";
   const [isUserOwner, setIsUserOwner] = useState(false); // State for checking if user is the owner of the room
   const [isUserParticipant, setIsUserParticipant] = useState(false);
@@ -74,7 +74,8 @@ function ChatRoomCard({ room, toggleComponent, user, deleteRoom, rooms }) {
   const handleClick = (e) => {
     // Toggle component only if clicked outside of the delete button
     if (e.target.tagName.toLowerCase() !== "button") {
-      toggleComponent(room);
+      handleSelectRoom(room);
+      console.log(room);
     }
   };
 
