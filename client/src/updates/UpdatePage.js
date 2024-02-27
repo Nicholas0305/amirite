@@ -1,17 +1,17 @@
 import React from "react";
-import AboutNav from "./AboutNav";
-import AboutPageBody from "./AboutPageBody";
+import UpdateNav from "./UpdateNav";
+import UpdateBody from "./UpdateBody";
 import { useLocation } from "react-router-dom";
-function AboutPage() {
+function UpdatePage() {
   const location = useLocation();
   const user = location.state && location.state.user;
   return (
     <div id="about-page-container">
-      <AboutNav user={user} />
+      <UpdateNav user={user} />
       <div id="about-page-body-container">
-        <AboutPageBody />
+        <UpdateBody />
       </div>
     </div>
   );
 }
-export default AboutPage;
+export default UpdatePage;

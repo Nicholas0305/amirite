@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faComment } from "@fortawesome/free-regular-svg-icons";
 import { faUserCircle } from "@fortawesome/free-regular-svg-icons";
 
-function MainPageNav({ user }) {
+function UpdateNav({ user }) {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -56,4 +56,4 @@ function MainPageNav({ user }) {
     </nav>
   );
 }
-export default MainPageNav;
+export default UpdateNav;

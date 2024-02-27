@@ -94,7 +94,12 @@ function MainPage() {
         </button>
       </div>
       {chatForm && (
-        <NewChatRoomForm rooms={rooms} setRooms={setRooms} user={user} />
+        <NewChatRoomForm
+          rooms={rooms}
+          chatForm={chatForm}
+          setRooms={setRooms}
+          user={user}
+        />
       )}
       {user && showWelcomeMessage && (
         <div id="welcomeMessage-container">
@@ -102,13 +107,13 @@ function MainPage() {
         </div>
       )}
       <div id="both-lists-container">
-        <div id="my-chat-rooms-message-container">
-          <h1>
-            My Rooms{" "}
-            <FontAwesomeIcon style={{ color: "dodgerblue" }} icon={faLock} />
-          </h1>
-        </div>
         <div id="user-rooms-list-container">
+          <div id="my-chat-rooms-message-container">
+            <h1>
+              My Rooms{" "}
+              <FontAwesomeIcon style={{ color: "dodgerblue" }} icon={faLock} />
+            </h1>
+          </div>
           <UserRoomsList
             toggleComponent={toggleComponent}
             rooms={filtered}
@@ -116,17 +121,18 @@ function MainPage() {
             deleteRoom={deleteRoom}
           />
         </div>
-        <div id="public-chat-rooms-message-container">
-          <h1>
-            Public Chat Rooms{" "}
-            <FontAwesomeIcon
-              style={{ color: "dodgerblue" }}
-              className="fa-globe"
-              icon={faGlobe}
-            />
-          </h1>
-        </div>
+
         <div id="public-rooms-list-container">
+          <div id="public-chat-rooms-message-container">
+            <h1>
+              Public Chat Rooms{" "}
+              <FontAwesomeIcon
+                style={{ color: "dodgerblue" }}
+                className="fa-globe"
+                icon={faGlobe}
+              />
+            </h1>
+          </div>
           <ChatRoomList
             toggleComponent={toggleComponent}
             rooms={filtered}

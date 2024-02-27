@@ -5,7 +5,7 @@ import ChatRoomCard from "./ChatRoomCard";
 
 function ChatRoomList({ rooms, toggleComponent, user, deleteRoom }) {
   return (
-    <ul id="chatroomlist">
+    <ul id="public-rooms-list">
       {rooms.map((room) => {
         return (
           <ChatRoomCard

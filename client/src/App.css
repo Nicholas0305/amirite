@@ -128,56 +128,38 @@ textarea {
   margin-right: 10px;
 }
 
-#sidebar {
-  overflow-y: auto;
-  overflow-x: hidden;
-  height: 100vh;
-  width: 250px;
-  position: absolute;
-  margin-top: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
-  background-color: whitesmoke;
-  left: 10px;
-}
-
-#sidebar ul {
-  list-style-type: none;
-  margin-left: 0;
-  padding: 0;
-  margin-top: 0;
-}
-
-#user-rooms-list {
+#both-lists-container {
   display: flex;
-  justify-content: center;
-  margin-left: 0;
-  list-style: none;
-  padding: 0;
   flex-wrap: wrap;
-  height: 685px;
-
-  overflow-y: auto;
+  justify-content: space-evenly; /* Adjust as needed */
+  margin-top: 20px; /* Adjust spacing between headings and lists */
+  justify-content: center;
 }
 #user-rooms-list-container {
-  display: flex;
-  justify-content: left;
-  width: fit-content;
+  border-right: 2px solid dodgerblue;
 }
+#user-rooms-list-container,
 #public-rooms-list-container {
+  width: 48%; /* Adjust as needed */
   display: flex;
-  justify-content: right;
-  width: fit-content;
+  flex-direction: column;
+  align-items: center; /* Center content horizontally */
 }
-#chatroomlist {
+#user-rooms-list,
+#public-rooms-list {
   display: flex;
-  justify-content: center;
-  margin-left: 0;
+  flex-wrap: wrap; /* Allow items to wrap onto multiple lines if needed */
+  text-align: center;
   list-style: none;
   padding: 0;
-  flex-wrap: wrap;
-  height: 350px;
-  overflow-y: auto;
+  justify-content: center;
+  overflow-y: auto; /* Enable vertical scrolling */
+  max-height: 352px; /* Adjust the maximum height as needed */
+}
+
+#user-rooms-list li,
+#public-rooms-list li {
+  display: inline-block; /* Display list items horizontally */
 }
 .card {
   color: white;
@@ -189,7 +171,7 @@ textarea {
   /* margin-bottom: 20px; */
   margin-left: 5px;
   margin-right: 5px;
-  margin-top: 15px;
+  margin-top: 21px;
   padding: 10px;
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Added box-shadow to the transition */
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.5); /* Added box shadow */
@@ -209,12 +191,16 @@ textarea {
 }
 #searchbar {
   padding: 10px 20px;
-  border: 2px solid #ccc;
+  border: 2px solid grey;
   border-radius: 20px;
   outline: none;
   width: 200px;
   transition: all 0.3s ease;
-  color: #000000;
+  color: white;
+  background-color: #333333;
+}
+#searchbar:hover {
+  border: 2px solid dodgerblue;
 }
 #chat-container {
   display: flex;
@@ -278,60 +264,60 @@ textarea {
   display: flex;
   display: inline;
 }
-#newChatRoomForm {
-  background-color: #f9f9f9;
+#new-room-form-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+#new-room-form {
+  background-color: rgb(39, 39, 39);
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  width: 20vw;
+  border: 2px solid grey;
+  align-items: center;
 }
 
-#newChatRoomForm h2 {
+#new-room-form:hover {
+  border: 2px solid dodgerblue;
+}
+#new-room-form h2 {
   margin-top: 0;
+  color: white;
 }
 
-#newChatRoomForm form {
-  display: flex;
-  flex-direction: column;
-}
-
-#newChatRoomForm label {
+#new-room-form label {
   margin-bottom: 5px;
 }
 
-#newChatRoomForm input {
+#new-room-form input {
   padding: 10px;
   margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
   transition: border-color 0.3s ease;
+  background-color: #333333;
 }
 
-#newChatRoomForm input:focus {
+#new-room-form input:focus {
   border-color: dodgerblue;
 }
 
-#newChatRoomForm button {
+#new-room-form button {
   padding: 10px 20px;
   background-color: dodgerblue;
   color: white;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  transition: background-color 0.3s ease;
+  transition: background-color 1s ease;
 }
 
 #newChatRoomForm button:hover {
   background-color: #007bb6;
 }
-/* #toggleFormButton {
-  padding: 10px 20px;
-  background-color: dodgerblue;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-} */
+
 #loginForm-container {
   display: flex;
 
@@ -432,6 +418,7 @@ textarea {
   transition: background-color 0.3s ease;
   margin-left: 0px;
   border: 1px solid grey;
+  color: white;
 }
 
 #Leaderboards-card:hover {
@@ -520,9 +507,11 @@ textarea {
   width: 80%;
   max-width: 600px;
   padding: 20px;
-  background-color: #f7f7f7;
+  background-color: rgb(39, 39, 39);
   border-radius: 10px;
   box-shadow: 0 5px 4px rgba(0, 0, 0, 0.1); /* Horizontal, Vertical, Blur, Spread, Color */
+  color: white;
+  border: 1px solid grey;
 }
 
 .about-card h1 {
@@ -536,8 +525,6 @@ textarea {
 }
 
 .about-card ul {
-  list-style-type: none;
-  padding-left: 0;
 }
 
 .about-card li {
@@ -600,6 +587,8 @@ textarea {
   display: flex;
   justify-content: center;
   color: white;
+  height: fit-content;
+  width: fit-content;
 }
 #public-chat-rooms-message-container {
   display: flex;

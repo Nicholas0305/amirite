@@ -1,7 +1,7 @@
 // AboutPageBody.js
 import React from "react";
 
-function AboutPageBody() {
+function UpdateBody() {
   return (
     <div className="about-page-container">
       <div className="about-card">
@@ -28,4 +28,4 @@ function AboutPageBody() {
   );
 }
 
-export default AboutPageBody;
+export default UpdateBody;

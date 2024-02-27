@@ -7,7 +7,7 @@ import React from "react";
 import { useFormik } from "formik";
 import * as yup from "yup";
 
-function NewChatRoomForm({ rooms, setRooms, user }) {
+function NewChatRoomForm({ rooms, setRooms, user, chatForm }) {
   function addParticipant(currentRoom, currentUser) {
     fetch("http://127.0.0.1:5555/room_participants", {
       method: "POST",
@@ -76,14 +76,16 @@ function NewChatRoomForm({ rooms, setRooms, user }) {
   });
   //Input form for new Chat room
   return (
-    <div id="newChatRoomForm">
+    <div id="new-room-form-container">
       <form
+        id="new-room-form"
+        className={chatForm ? "active" : ""}
         onSubmit={(e) => {
           e.preventDefault();
           formik.handleSubmit(e);
         }}
       >
-        <h2>New Chat Room</h2>
+        <h2>New Room</h2>
         <div>
           <input
             id="chatRoomName"
