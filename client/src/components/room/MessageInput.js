@@ -1,6 +1,13 @@
 import React, { useState } from "react";
 
-function MessageInput({ user, socket, room, messages, setMessages }) {
+function MessageInput({
+  user,
+  socket,
+  room,
+  messages,
+  setMessages,
+  scrollToBottom,
+}) {
   const [message, setMessage] = useState("");
 
   const addMessage = (e) => {
@@ -15,9 +22,6 @@ function MessageInput({ user, socket, room, messages, setMessages }) {
 
     // Send message to WebSocket server
     socket.emit("new_message", newMessage);
-
-    // Update messages state with the new message
-    // setMessages([...messages, newMessage]);
 
     // Reset the message input field
     setMessage("");

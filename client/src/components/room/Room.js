@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Message from "./Message";
 import MessageInput from "./MessageInput";
 import io from "socket.io-client";
@@ -12,16 +12,30 @@ function Room() {
   const [messages, setMessages] = useState([]);
   const [users, setUsers] = useState([]);
   const [edit, setEdit] = useState(false);
-
   const [user, setUser] = useState(location.state?.user); // Initialize user state as null
   const [room, setRoom] = useState(location.state?.room);
-  console.log(location.state);
+  const messageListRef = useRef(null);
   useEffect(() => {
-    // Set up WebSocket event listeners
-    console.log(room);
+    // Define scrollInterval function
+    const scrollInterval = () => {
+      const interval = setInterval(() => {
+        scrollToBottom();
+
+        // Clear the interval after executing the scroll function once
+        clearInterval(interval);
+      }, 50);
+    };
+
+    // Initial message and user fetch on mount
+    scrollInterval();
+    fetchUsers();
+    socket.emit("fetch_messages", { room_id: room.room_id });
+
+    // Updates state on message emit
     socket.on("message", (new_message) => {
       if (room && new_message.room_id === room.room_id) {
         setMessages((prevMessages) => [...prevMessages, new_message]);
+        scrollInterval(); // Call scrollInterval function here
       }
     });
 
@@ -29,18 +43,12 @@ function Room() {
       setMessages(fetchedMessages);
     });
 
-    // Fetch initial messages when component mounts
-    socket.emit("fetch_messages", { room_id: room.room_id });
-
-    // Fetch users when room changes
-    fetchUsers();
-
     // Clean up event listeners when component unmounts
     return () => {
       socket.off("message");
       socket.off("fetched_messages");
     };
-  }, [room, socket]); // Re-run effect when room changes
+  }, [room]); // Re-run effect when room changes
 
   const fetchUsers = () => {
     fetch("http://127.0.0.1:5555/users")
@@ -51,10 +59,17 @@ function Room() {
       .catch((error) => console.error("Error fetching users:", error));
   };
 
+  const scrollToBottom = () => {
+    if (messageListRef.current) {
+      messageListRef.current.scrollTop = messageListRef.current.scrollHeight;
+    }
+  };
+
   const getMessageUserName = (userId) => {
     const user = users.find((user) => user.user_id === userId);
     return user ? user.username : "Unknown User";
   };
+
   const addMessage = (message) => {
     if (room) {
       socket.emit("new_message", {
@@ -64,17 +79,20 @@ function Room() {
       });
     }
   };
-
+  const handleNavigate = () => {
+    navigate("/MainPage", { state: { user } });
+  };
   return (
-    <div id="chat-container">
-      <ul id="chat-list">
-        <div id="chatRoomName">
-          <h1>Chat Room: {room && room.room_name}</h1>
-        </div>
+    <div id="room-container">
+      <div id="room-header">
+        <h1 onClick={handleNavigate}>{"<"}</h1>
+        <h1>{room && room.room_name}</h1>
+      </div>
+      <ul id="message-list" ref={messageListRef}>
         {messages.length > 0 &&
           messages.map((message, index) => (
-            <div key={index}>
-              <p id="username">{getMessageUserName(message.user_id)}</p>
+            <div id="message-container" key={index}>
+              <p id="message-username">{getMessageUserName(message.user_id)}</p>
               <Message
                 key={message.message_id} // This key might not be needed inside ChatCard
                 message={message}
@@ -83,7 +101,8 @@ function Room() {
               />
             </div>
           ))}
-        {edit && <input></input>}
+      </ul>
+      <div id="message-input-container">
         <MessageInput
           user={user}
           socket={socket}
@@ -91,8 +110,9 @@ function Room() {
           messages={messages}
           setMessages={setMessages}
           addMessage={addMessage}
+          scrollToBottom={scrollToBottom}
         />
-      </ul>
+      </div>
     </div>
   );
 }

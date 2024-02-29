@@ -805,3 +805,126 @@ a:hover::after {
 .welcome-section {
   animation: fade-in 1s ease-in-out;
 }
+
+#chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Adjust as needed */
+}
+
+#chat-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 20px;
+}
+
+#chatRoomName {
+  background-color: #7289da; /* Discord's primary color */
+  padding: 10px;
+  color: #fff;
+}
+
+#chatRoomName h1 {
+  margin: 0;
+}
+
+#chat-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh; /* Adjust as needed */
+}
+
+#chat-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 20px;
+}
+
+#chatRoomName {
+  background-color: #7289da; /* Discord's primary color */
+  padding: 10px;
+  color: #fff;
+}
+
+#chatRoomName h1 {
+  margin: 0;
+}
+
+#room-container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+#room-header {
+  background-color: black; /* Discord's primary color */
+  padding: 10px;
+  color: #fff;
+  text-align: center;
+  font-size: 1rem;
+  border-bottom: 1px solid dodgerblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#room-header h1 {
+  margin-right: auto;
+}
+#message-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+  list-style: none;
+}
+
+#message-container {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+#message-username {
+  font-weight: bold;
+  margin-right: 10px;
+  color: #7289da; /* Discord's primary color */
+}
+
+#message-content {
+  background-color: #f0f0f0;
+  padding: 10px 15px;
+  border-radius: 10px;
+  max-width: 70%;
+}
+
+#message-input-container {
+  padding: 20px;
+  background-color: #f0f0f0;
+  border-top: 1px solid #ccc;
+}
+
+#message-input {
+  width: calc(100% - 60px);
+  padding: 10px;
+  border: none;
+  border-radius: 20px;
+  margin-right: 10px;
+  font-size: 1rem;
+  background-color: black;
+}
+
+#send-button {
+  width: 50px;
+  height: 50px;
+  background-color: #7289da; /* Discord's primary color */
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+#send-button:hover {
+  background-color: #677bc4; /* Slightly darker shade */
+}

@@ -54,18 +54,15 @@ function Message({ message, user }) {
   return (
     <li>
       <p>{message.message}</p>
-      {/* {!liked && !disliked && ( */}
-      <>
-        <div>
-          <button className={"like-button"} onClick={handleLikes}>
-            <ThumbsUp />
-          </button>
-          <button className="dislike-button" onClick={handleDislikes}>
-            <ThumbsDown />
-          </button>
-        </div>
-      </>
-      {/* // )} */}
+
+      <div>
+        <button className={"like-button"} onClick={handleLikes}>
+          <ThumbsUp />
+        </button>
+        <button className="dislike-button" onClick={handleDislikes}>
+          <ThumbsDown />
+        </button>
+      </div>
     </li>
   );
 }
