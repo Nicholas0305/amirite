@@ -75,6 +75,7 @@ textarea {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  z-index: 1;
 }
 
 .navbar h1 {
@@ -633,47 +634,58 @@ textarea {
   background-color: dodgerblue;
 }
 .form-container {
-  position: absolute;
-  top: -200%;
-  right: 10px; /* Adjust this value as needed */
-  width: 10%;
-  height: 10%;
-  background-color: white;
-  transition: top 0.5s ease; /* Smooth transition for sliding effect */
-  z-index: -1; /* Ensure the form is on top of other elements */
-  color: black;
-  margin-top: 80px;
+  position: fixed; /* Ensure the form stays fixed relative to the viewport */
+  top: 0; /* Adjust as needed */
+  right: -100%; /* Initially position the form off-screen to the right */
+  width: 150px; /* Adjust the width as needed */
+  background-color: rgb(39, 39, 39);
+  transition: right 0.5s ease; /* Use transition for smooth sliding effect */
+  z-index: 999; /* Ensure the form appears above other elements */
+  color: white;
+  margin-top: 90px; /* Adjust the top margin to avoid overlapping with the navbar */
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  background-color: white;
+  background-color: black;
   padding: 5px;
   border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Add unit and adjust shadow values as needed */
-}
-.form p {
-  margin-top: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .open {
-  top: 0; /* Slide the form down to the top of the page */
+  right: 0;
+  background-color: #333333;
 }
+
+.form p {
+  margin: 0;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  color: white;
+  position: relative;
+  z-index: 1;
+  width: fit-content;
+}
+
 .form p::after {
   content: "";
   position: absolute;
-  bottom: -2px; /* Adjust as needed */
+  bottom: -2px;
   left: 0;
-  width: 60%;
-  height: 2px; /* Adjust as needed */
+  width: 100%;
+  height: 2px;
   background-color: transparent;
-  transition: background-color 0.3s ease; /* Smooth transition effect */
+  transition: background-color 0.3s ease;
+  z-index: 1;
 }
 
 .form p:hover::after {
-  background-color: dodgerblue; /* Change the color to your desired underline color */
+  background-color: dodgerblue;
+  z-index: 1;
 }
+
 .like-button,
 .dislike-button {
   padding: 5px 5px;
@@ -877,17 +889,23 @@ a:hover::after {
   padding: 20px;
   list-style: none;
 }
-
-#message-container {
+#message-container:hover {
+  background-color: rgb(71, 67, 67);
+  border-radius: 5px;
+}
+#message-content-container {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 20px;
+  height: fit-content;
 }
-
+#message-container li {
+  margin: 0;
+}
 #message-username {
   font-weight: bold;
-  margin-right: 10px;
+  margin: 0;
   color: #7289da; /* Discord's primary color */
+  margin-top: 10px;
 }
 
 #message-content {
@@ -927,4 +945,13 @@ a:hover::after {
 
 #send-button:hover {
   background-color: #677bc4; /* Slightly darker shade */
+}
+#room-navigate {
+  color: dodgerblue;
+  font-size: 30px;
+  padding: 0;
+}
+#room-navigate:hover {
+  color: #007bff;
+  cursor: pointer;
 }

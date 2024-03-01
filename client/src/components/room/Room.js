@@ -85,20 +85,24 @@ function Room() {
   return (
     <div id="room-container">
       <div id="room-header">
-        <h1 onClick={handleNavigate}>{"<"}</h1>
+        <h1 onClick={handleNavigate} id="room-navigate">
+          {"<"}
+        </h1>
         <h1>{room && room.room_name}</h1>
       </div>
       <ul id="message-list" ref={messageListRef}>
         {messages.length > 0 &&
           messages.map((message, index) => (
-            <div id="message-container" key={index}>
+            <div id="message-container">
               <p id="message-username">{getMessageUserName(message.user_id)}</p>
-              <Message
-                key={message.message_id} // This key might not be needed inside ChatCard
-                message={message}
-                user={user}
-                edit={edit}
-              />
+              <div id="message-content-container" key={index}>
+                <Message
+                  key={message.message_id} // This key might not be needed inside ChatCard
+                  message={message}
+                  user={user}
+                  edit={edit}
+                />
+              </div>
             </div>
           ))}
       </ul>
